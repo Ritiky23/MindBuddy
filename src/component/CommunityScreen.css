@@ -1,0 +1,90 @@
+.community-screen {
+
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Full width of the screen */
+    margin: 0 auto;
+    padding: 200px;
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .posts {
+    width: 100%; /* Full width for the posts section */
+    margin-bottom: 20px;
+    border-top: 1px solid #ccc;
+  }
+  
+  .post {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%; /* Full width of the container */
+    max-width: none; /* Ensure no max-width constraint */
+    box-sizing: border-box;
+  }
+  
+  .post p {
+    margin: 5px 0;
+  }
+  
+  .timestamp {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 5px;
+  }
+  
+  .post-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Full width for the form */
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding: 15px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+  
+  textarea {
+    resize: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%; /* Full width of the input area */
+    box-sizing: border-box;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%; /* Full width for the button */
+    box-sizing: border-box;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:enabled {
+    background-color: #901da2;
+  }
+  

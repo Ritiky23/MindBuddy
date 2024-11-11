@@ -1,0 +1,113 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Centering the auth-container */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6.5rem;
+    width: 55%;
+    height: auto;
+    max-width: 600px;
+    background: linear-gradient(145deg, #e0d4f7, #f3e9ff);
+    border-radius: 14px;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.auth-container:hover {
+    transform: scale(1.03);
+}
+
+/* Header Styles */
+h2 {
+    font-size: 2.2rem;
+    color: #6a0dad;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+input {
+    padding: 1rem;
+    margin: 0.8rem 0;
+    border-radius: 8px;
+    border: 1px solid #d4c2e9;
+    outline: none;
+    transition: border-color 0.3s ease;
+    font-size: 1.1rem;
+}
+
+input:focus {
+    border-color: #9c27b0;
+}
+
+button {
+    padding: 1rem;
+    background-color: #9c27b0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #7a1b9c;
+    transform: translateY(-3px);
+}
+
+/* Error Message */
+.error {
+    color: #d32f2f;
+    margin-top: 0.8rem;
+    font-size: 1rem;
+}
+
+/* Text and Links */
+p {
+    margin-top: 1.8rem;
+    color: #6a0dad;
+    font-size: 1.1rem;
+}
+
+a {
+    color: #9c27b0;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #6a0dad;
+    text-decoration: underline;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
