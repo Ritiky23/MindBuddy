@@ -1,0 +1,138 @@
+/* GamesFunScreen.css */
+
+.games-fun-screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .game-view-container {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .game-selection-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .menu-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .menu-subtitle {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+    box-sizing: border-box;
+  }
+  
+  .game-card {
+    background-color: var(--card-bg-color);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .game-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .game-card-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+  
+  .game-card-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .game-card-content p {
+    font-size: 1rem;
+    color: #777;
+  }
+  
+  .game-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    visibility: hidden;
+    transition: visibility 0.3s ease;
+  }
+  
+  .game-card:hover .game-card-overlay {
+    visibility: visible;
+  }
+  
+  .back-to-menu-button {
+    background-color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-to-menu-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .game-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .game-placeholder-content {
+    text-align: center;
+    color: #555;
+    width: 100%;
+  }
+  
+  .fade-in {
+    animation: fadeIn 1s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  

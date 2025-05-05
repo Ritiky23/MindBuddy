@@ -1,0 +1,171 @@
+body, html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #e0e0e0;
+}
+
+.hero {
+  position: relative; /* Added to allow absolute positioning of text */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.276), rgba(50, 50, 100, 0.85)), url('../assets/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: rgba(255, 255, 255, 0); /* Sets the default text color to white */
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Hero Heading */
+.hero h1 {
+  position: relative; /* Changed to absolute positioning */
+  top: 25%; /* Vertically center */
+   /* Horizontally center */
+ /* Fine-tune centering */
+  font-size: 4rem;
+  font-weight: bold;
+  align-items: center;
+
+  z-index: 1;
+  color: #f4f4f9;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Stronger shadow for more contrast */
+}
+
+/* Hero Paragraph */
+.hero p {
+  position: relative; /* Added to position the paragraph text properly */
+  top: 20%; /* Adjust to position below the heading */
+ /* Horizontally center */
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: white;
+  text-shadow: 1px 1px 6px rgba(255, 255, 255, 0.145); /* Slightly stronger shadow */
+}
+
+/* Hero Button */
+.hero-button {
+  position: relative;
+  top:20%;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #695acd00;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(55, 30, 30, 0.2);
+}
+
+.hero-button:hover {
+  background-color: #473d8b00;
+  transform: translateY(-3px);
+}
+
+.questionnaire-container {
+  padding: 20px;
+  position: relative;
+  max-width: 700px;
+  top: -25%;
+  width: 100%;
+  text-align: center;
+  background-color: #f3f4f7;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin: auto;
+}
+
+h1 {
+  color: #6f42c1;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.question-box {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.question-text {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #6f42c1;
+  margin-bottom: 15px;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.option-label {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.option-label.selected {
+  background-color: #6f42c1; /* Adjust color as needed */
+  color: white;
+}
+
+.option-label:hover,
+.option-label input:checked + & {
+  background-color: #6f42c1;
+  color: #fff;
+}
+
+.option-label input {
+  display: none;
+}
+
+.navigation-buttons {
+  margin-top: 20px;
+}
+
+.next-btn,
+.submit-btn {
+  padding: 10px 20px;
+  background-color: #6f42c1;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0 5px;
+}
+
+.next-btn:hover,
+.submit-btn:hover {
+  background-color: #5a2d9c;
+  transform: scale(1.05);
+}
+
+.result-box {
+  margin-top: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.result-box h2 {
+  color: #6f42c1;
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}

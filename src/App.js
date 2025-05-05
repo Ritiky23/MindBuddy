@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import Login from "../src/component/Login";
+import SignUp from "../src/component/SignUp";
+import HomeScreen from "../src/component/HomeScreen";
+import ChatWhisper from "./component/ChatWhisper";
+import Questionnaire from "./component/Questionnaire";
+import CommunityScreen from "./component/CommunityScreen";
+import "./App.css";
+import GamesFunScreen from "./component/GamesFunScreen";
 
-function App() {
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={isAuthenticated ? <Navigate to="/home" /> : <Login setAuth={setIsAuthenticated} />}
+        />
+        <Route path="/community" element={<CommunityScreen/>} />
+          <Route path="/chatwhisper" element={<ChatWhisper/>} />
+          <Route path="/questionnaire" element={<Questionnaire />} />
+          <Route path="/gamesfun" element={<GamesFunScreen />} />
+        <Route path="/signup" element={<SignUp setAuth={setIsAuthenticated} />} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/home" element={<HomeScreen />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

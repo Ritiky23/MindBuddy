@@ -1,0 +1,257 @@
+/* src/component/CommunityScreen.css */
+
+/* --- Import Fonts (Ensure loaded globally or here) --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* --- CSS Variables --- */
+:root {
+  --primary-color: #6a5acd; /* SlateBlue */
+  --primary-dark: #483d8b; /* DarkSlateBlue */
+  --secondary-color: #a095e5; /* Lighter purple */
+  --accent-color: #f0eefc; /* Very light purple/lavender */
+  --my-message-bg: #e6e1ff; /* Light purple for user's messages */
+  --other-message-bg: #f1f1f1; /* Light gray for others' messages */
+  --text-color: #333;
+  --text-light: #f8f9fa;
+  --text-muted: #6c757d;
+  --border-color: #dee2e6;
+  --input-bg: #ffffff; /* Background for input area */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --header-height: 60px;
+  --input-area-min-height: 70px; /* Minimum height for the input area */
+
+  --font-primary: 'Poppins', sans-serif;
+}
+
+/* --- Main Page Container --- */
+.community-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: var(--font-primary);
+}
+
+/* --- Chat Container --- */
+.chat-container {
+  width: 100%;
+  max-width: 800px;
+  height: calc(100vh - 40px);
+  max-height: 90vh;
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --- Chat Header --- */
+.chat-header {
+  /* Use a subtle gradient */
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: var(--text-light);
+  padding: 0 20px; /* Adjust padding to control vertical space via flex */
+  border-top-left-radius: 12px; /* Keep rounded corners */
+  border-top-right-radius: 12px;
+  flex-shrink: 0;
+  /* Slightly enhanced shadow */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  height: var(--header-height);
+  display: flex;
+  align-items: center; /* Vertically center content */
+  /* justify-content: space-between; */ /* Use if adding elements on the right */
+  position: relative; /* For potential pseudo-elements */
+}
+
+/* Container for icon and title */
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Space between icon and title */
+}
+
+.header-icon {
+    width: 26px; /* Adjust size */
+    height: 26px;
+    fill: var(--text-light); /* Icon color */
+    opacity: 0.9; /* Slightly transparent icon */
+}
+
+.chat-header h2 {
+  margin: 0; /* Remove default heading margin */
+  font-size: 1.3rem; /* Keep size */
+  font-weight: 600; /* Keep weight */
+  color: #dee2e6;
+  /* Add subtle text shadow for depth */
+   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: Add a subtle bottom border/highlight */
+/* .chat-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+} */
+
+/* --- Posts List (Message Area) --- */
+.posts-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: var(--input-bg); /* Consistent white background */
+}
+
+/* Optional: Scrollbar Styling */
+.posts-list::-webkit-scrollbar { width: 8px; }
+.posts-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+.posts-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+.posts-list::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+/* --- Individual Post Styling --- */
+.post {
+  display: flex;
+  max-width: 75%;
+  flex-direction: column;
+}
+.post-username {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.post-bubble {
+  padding: 10px 15px;
+  border-radius: 18px;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+.post-text {
+  margin: 0 0 5px 0;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  white-space: pre-wrap; /* Respect newlines in text */
+}
+.post-timestamp {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+  margin: 0;
+}
+.other-post { align-self: flex-start; }
+.other-post .post-bubble { background-color: var(--other-message-bg); border-top-left-radius: 5px; }
+.other-post .post-username { margin-left: 5px; }
+.my-post { align-self: flex-end; }
+.my-post .post-bubble { background-color: var(--my-message-bg); border-top-right-radius: 5px; color: #333; }
+.my-post .post-timestamp { color: #555; }
+.no-posts-message { text-align: center; color: var(--text-muted); padding: 30px; font-style: italic; }
+
+/* ================================= */
+/* ===== MESSAGE INPUT AREA FIX ===== */
+/* ================================= */
+
+.message-input-area {
+  display: flex;
+  align-items: flex-end; /* Align items vertically to the bottom */
+  padding: 12px 15px; /* Adjusted padding */
+  background-color: var(--other-message-bg); /* Use light gray background */
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+  min-height: var(--input-area-min-height); /* Ensure a minimum height */
+  box-sizing: border-box;
+  gap: 10px; /* Space between textarea and button */
+}
+
+.message-input-area textarea {
+  /* ***** CORE FIX: Ensure flex-grow works ***** */
+  flex-grow: 1; /* Make textarea take available space */
+  width: 100%;   /* Explicitly set width to 100% of its flex container space */
+  /* ******************************************* */
+
+  resize: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  font-family: var(--font-primary);
+  max-height: 110px; /* Slightly increased max height */
+  overflow-y: auto;
+  line-height: 1.5;
+  background-color: var(--input-bg); /* White background for textarea */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Added box-shadow transition */
+  box-sizing: border-box; /* Include padding in width calculation */
+  min-height: 44px; /* Minimum height matching the button */
+}
+
+.message-input-area textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.2);
+}
+
+.message-input-area textarea:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.send-button {
+  flex-shrink: 0; /* Prevent button shrinking */
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  /* Optional: Add subtle shadow for depth */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.send-button svg {
+  width: 22px;
+  height: 22px;
+}
+
+.send-button:hover:enabled {
+  background-color: var(--primary-dark);
+  transform: scale(1.05);
+}
+
+.send-button:disabled {
+  background-color: #b0b0b0; /* Slightly darker disabled color */
+  cursor: not-allowed;
+  transform: scale(1);
+  /* box-shadow: none; */
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+  .community-page { padding: 5px; }
+  .chat-container { height: calc(100vh - 10px); border-radius: 0; max-height: none; }
+  .chat-header { border-top-left-radius: 0; border-top-right-radius: 0; padding: 10px 15px; height: calc(var(--header-height) - 10px); }
+  .chat-header h2 { font-size: 1.1rem; }
+  .posts-list { padding: 15px; }
+  .message-input-area { padding: 10px 12px; min-height: calc(var(--input-area-min-height) - 10px); gap: 8px; }
+  .message-input-area textarea { padding: 8px 12px; font-size: 0.95rem; min-height: 40px; }
+  .send-button { width: 40px; height: 40px; }
+  .send-button svg { width: 20px; height: 20px; }
+  .post { max-width: 85%; }
+}
