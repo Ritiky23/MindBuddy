@@ -1,138 +1,347 @@
 /* GamesFunScreen.css */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+
+:root {
+  --primary-font: 'Nunito', sans-serif;
+  --text-color-light: #f8f9fa;
+  --text-color-dark: #343a40;
+  --text-color-medium: #495057;
+  --text-color-subtle: #6c757d;
+
+  --background-light: #eef2f7;
+  --background-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --card-hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+}
+
+body { /* Apply font globally if not already set */
+  font-family: var(--primary-font);
+  margin: 0;
+  background-color: var(--background-light); /* Fallback */
+  color: var(--text-color-dark);
+}
 
 .games-fun-screen {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: 100vh;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center flex items (like game-selection-menu-wrapper) horizontally */
+  width: 100vw; /* Use viewport width */
+  /* OR simply width: 100%; if its parent is the body or another full-width container */
+  min-height: 100vh;
+  box-sizing: border-box;
+  /* overflow: hidden; /* Be cautious with this, might hide content if it overflows */
+  overflow-x: hidden; /* More specific if you only want to prevent horizontal scroll */
+  background: var(--background-gradient);
+  padding: 20px;
+}
+
+/* --- Game Selection Menu --- */
+.game-selection-menu-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to top for scrolling */
+  flex: 1;
+  width: 100%;
+  overflow-y: auto; /* Allow scrolling for the menu itself */
+  padding: 20px 0;
+}
+
+.game-selection-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px; /* Max width for better readability on large screens */
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+  backdrop-filter: blur(10px); /* Frosted glass effect */
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.back-to-previous-page-button {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+.back-to-previous-page-button:hover {
+  text-decoration: underline;
+}
+
+
+.menu-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 10px;
+}
+
+.menu-title {
+  font-size: clamp(2rem, 4vw, 3.5rem); /* Responsive font size */
+  font-weight: 700;
+  color: var(--text-color-dark);
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.menu-subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  color: var(--text-color-medium);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Slightly larger cards */
+  gap: 25px;
+  width: 100%;
+  margin-top: 20px;
+  box-sizing: border-box;
+}
+
+.game-card {
+  border-radius: var(--border-radius-md);
+  padding: 25px;
+  text-align: center;
+  cursor: pointer;
+  position: relative; /* For overlay/play indicator */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-size 0.4s ease;
+  color: var(--text-color-light); /* Text color on cards */
+  box-shadow: var(--card-shadow);
+  overflow: hidden; /* Important for gradient animations or inner elements */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute content within card */
+  min-height: 220px; /* Ensure cards have some height */
+  background-size: 100% 100%; /* For potential background effects on hover */
+}
+
+.game-card:hover, .game-card:focus-within {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: var(--card-hover-shadow);
+  background-size: 110% 110%; /* Subtle zoom effect for gradient if used */
+}
+.game-card:focus {
+  outline: 2px solid var(--text-color-dark); /* Accessibility */
+  outline-offset: 3px;
+}
+
+.game-card-icon-wrapper {
+  margin-bottom: 15px;
+}
+
+.game-card-icon {
+  font-size: 3.5rem; /* Larger icon */
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover .game-card-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.game-card-content h3 {
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: inherit; /* Inherit from .game-card */
+}
+
+.game-card-content p {
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  color: rgba(255, 255, 255, 0.85); /* Slightly transparent white for better readability */
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.game-card-play-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: rgba(0, 0, 0, 0.2); /* Darker overlay for the button */
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  margin-top: auto; /* Pushes to the bottom if card content is short */
+}
+
+.game-card:hover .game-card-play-indicator,
+.game-card:focus-within .game-card-play-indicator {
+  opacity: 1;
+  transform: translateY(0);
+}
+.game-card-play-indicator svg {
+  color: var(--text-color-light);
+}
+
+/* --- Game View & Placeholder --- */
+.game-view-container {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content vertically if it's short */
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  border-radius: var(--border-radius-lg);
+  margin: 20px auto; /* Center container on page */
+  max-width: 900px; /* Max width for game view */
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.back-to-menu-button {
+  background-color: var(--text-color-dark);
+  color: var(--text-color-light);
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 30px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start; /* Position at the top-left of its container */
+}
+
+.back-to-menu-button:hover {
+  background-color: var(--text-color-medium);
+  transform: translateY(-2px);
+}
+.back-to-menu-button svg {
+  transition: transform 0.3s ease;
+}
+.back-to-menu-button:hover svg {
+    transform: translateX(-3px);
+}
+
+.game-content-area {
+  width: 100%;
+  text-align: center; /* Center game title and placeholder */
+  flex-grow: 1; /* Allows placeholder to center if content is short */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertical centering for placeholder */
+}
+
+.game-title {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 700;
+  color: var(--text-color-dark);
+  margin-bottom: 30px;
+}
+
+.game-placeholder-content {
+  text-align: center;
+  color: var(--text-color-medium);
+  padding: 20px;
+  background-color: rgba(0,0,0,0.03);
+  border-radius: var(--border-radius-md);
+  max-width: 500px;
+  margin: 0 auto; /* Center placeholder box */
+}
+
+.game-placeholder-content .placeholder-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 15px;
+  animation: pulseIcon 2s infinite ease-in-out;
+}
+
+.game-placeholder-content h3 {
+  font-size: 1.5rem;
+  color: var(--text-color-dark);
+  margin-bottom: 10px;
+}
+
+.game-placeholder-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.loading-dots span {
+  display: inline-block;
+  animation: blink 1.4s infinite both;
+  font-size: 1.5rem;
+  color: var(--text-color-dark);
+}
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* --- Animations --- */
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
-  .game-view-container {
-    width: 100%;
-    box-sizing: border-box;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .full-width {
-    width: 100%;
-  }
-  
-  .game-selection-menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  .menu-title {
-    font-size: 2rem;
-    margin-bottom: 10px;
-  }
-  
-  .menu-subtitle {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-    width: 100%;
-    margin-top: 20px;
-    box-sizing: border-box;
-  }
-  
-  .game-card {
-    background-color: var(--card-bg-color);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .game-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .game-card-icon {
-    font-size: 3rem;
-    margin-bottom: 10px;
-  }
-  
-  .game-card-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .game-card-content p {
-    font-size: 1rem;
-    color: #777;
-  }
-  
-  .game-card-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-    visibility: hidden;
-    transition: visibility 0.3s ease;
-  }
-  
-  .game-card:hover .game-card-overlay {
-    visibility: visible;
-  }
-  
-  .back-to-menu-button {
-    background-color: #fff;
-    border: none;
+}
+
+@keyframes pulseIcon {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .games-fun-screen {
     padding: 10px;
-    cursor: pointer;
-    font-size: 1rem;
+  }
+  .game-selection-menu {
+    padding: 15px;
+    border-radius: var(--border-radius-md);
+  }
+  .game-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+  .game-card {
+    padding: 20px;
+    min-height: 200px;
+  }
+  .back-to-menu-button {
+    align-self: center; /* Center button on small screens */
     margin-bottom: 20px;
-    transition: background-color 0.3s ease;
   }
-  
-  .back-to-menu-button:hover {
-    background-color: #f0f0f0;
+  .game-view-container {
+    margin: 10px;
+    padding: 15px;
   }
-  
-  .game-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .game-placeholder-content {
-    text-align: center;
-    color: #555;
-    width: 100%;
-  }
-  
-  .fade-in {
-    animation: fadeIn 1s ease-out;
-  }
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
+}

@@ -140,7 +140,7 @@ const BreathingGame = ({ onBack }) => {
 
 
   return (
-    <div className="game-view-container breathing-game-container fade-in">
+    <div className="game-view-container border breathing-game-container fade-in">
       {/* Back Button */}
       <button onClick={onBack} className="back-to-menu-button">
   {/* SVG remains the same */}

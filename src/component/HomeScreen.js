@@ -1,98 +1,209 @@
-import React from 'react';
-import '../component/homeScreen.css';
+import React, { useEffect } from 'react';
+import '../component/homeScreen.css'; // Styles will be updated
 import { useNavigate } from 'react-router-dom';
-import image1 from '../assets/q1.jpg';
-import image2 from '../assets/q2.jpg';
-import image3 from '../assets/q3.jpg';
-import image4 from '../assets/q4.jpg';
-import image5 from '../assets/q5.jpg';
-import image6 from '../assets/q6.jpg';
+
+// Keep these for feature cards if you still want to show small images WITHIN cards
+// If not, you can remove them and the 'image' prop from featuresData
+// For this "no background image" exercise, I'll assume these are for small inline visuals, not backgrounds.
+// import image1Community from '../assets/q1.jpg';
+// import image2Assessments from '../assets/q2.jpg';
+// import image3Games from '../assets/q3.jpg';
+// import image4MedTrack from '../assets/q4.jpg';
+// import image5Experts from '../assets/q5.jpg';
+// import image6TalkAI from '../assets/q6.jpg';
+
+// NO heroBgImage import needed
+// import heroBgImage from '../assets/bg.jpg';
+
+import { FaBrain, FaComments, FaGamepad, FaUsers, FaTablets, FaUserMd, FaChevronDown } from 'react-icons/fa';
 
 const HomeScreen = () => {
   const navigate = useNavigate();
 
-  const handleTalkAI = () => {
-    navigate('/chatwhisper');
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
-  const handleAssessments = () => {
-    navigate('/questionnaire');
-  };
-  const handleCommunity = () => {
-    navigate('/community');  // Redirects to the community screen (update the route as needed)
-  };
-  const handlegames = () => {
-    navigate('/gamesfun');  // Redirects to the community screen (update the route as needed)
-  };
+  useEffect(() => {
+    const heroButton = document.querySelector('.hero-cta-button');
+    if (heroButton) {
+      heroButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetElement = document.querySelector(heroButton.getAttribute('href'));
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    }
+    // AOS initialization if not done globally
+    // AOS.init({ duration: 800, once: true });
+  }, []);
+
+
+  const featuresData = [
+    {
+      title: 'Talk to WhisperAI',
+      description: 'Share your thoughts and feelings in a safe, judgment-free space with our AI companion.',
+      // image: image6TalkAI, // Keep or remove based on if you show small images inside cards
+      icon: <FaComments />,
+      path: '/chatwhisper',
+      aosDelay: "100",
+    },
+    {
+      title: 'Self-Assessments',
+      description: 'Understand your emotional state better with guided questionnaires and insights.',
+      // image: image2Assessments,
+      icon: <FaBrain />,
+      path: '/questionnaire',
+      aosDelay: "200",
+    },
+    {
+      title: 'Mindful Games',
+      description: 'Engage in fun, relaxing games designed to reduce stress and improve focus.',
+      // image: image3Games,
+      icon: <FaGamepad />,
+      path: '/gamesfun',
+      aosDelay: "300",
+    },
+    {
+      title: 'Community Support',
+      description: 'Connect with others, share experiences, and find support in our community forums.',
+      // image: image1Community,
+      icon: <FaUsers />,
+      path: '/community',
+      aosDelay: "400",
+    },
+    {
+      title: 'Medication Tracker',
+      description: 'Stay on top of your medication schedule with our easy-to-use tracking tool.',
+      // image: image4MedTrack,
+      icon: <FaTablets />,
+      aosDelay: "500",
+      disabled: true,
+    },
+    {
+      title: 'Expert Connect',
+      description: 'Find and connect with licensed mental health professionals for personalized support.',
+      // image: image5Experts,
+      icon: <FaUserMd />,
+      aosDelay: "600",
+      disabled: true,
+    },
+  ];
+
+  const testimonialsData = [
+    {
+      quote: "Mind Buddy has been a game-changer for managing my anxiety. The AI chat is surprisingly comforting.",
+      author: "Alex R.",
+      aosDelay: "100",
+    },
+    {
+      quote: "The assessments helped me understand patterns I wasn't aware of. Highly recommend!",
+      author: "Jamie L.",
+      aosDelay: "200",
+    },
+    {
+      quote: "I love the mindful games! They're a perfect way to unwind after a stressful day.",
+      author: "Priya K.",
+      aosDelay: "300",
+    }
+  ];
+
 
   return (
-    <div>
-    {/* Hero Section */}
-{/* Hero Section */}
-<section className="hero1">
-  <h1>Welcome to Mind Buddy</h1>
-  <p>Your companion for mental well-being</p>
-  <a href="#features" className="hero-button1">Explore Features</a>
-</section>
+    <div className="home-page-wrapper">
+      <header className="app-header">
+        <div className="container header-container">
+          <div className="logo">
+            Mind Buddy
+          </div>
+          <nav className="main-nav">
+            <a href="#features">Features</a>
+            <a href="#testimonials">Testimonials</a>
+          </nav>
+        </div>
+      </header>
 
+      <main>
+        {/* Hero Section - style prop removed */}
+        <section className="hero-section">
+          {/* <div className="hero-overlay"></div> No longer needed with new gradient approach */}
+          <div className="hero-shape hero-shape-1"></div>
+          <div className="hero-shape hero-shape-2"></div>
+          <div className="hero-shape hero-shape-3"></div>
+          <div className="container hero-content">
+            <h1 className="hero-title" data-aos="fade-up">
+              Your Journey to <span className="highlight">Mental Wellness</span> Starts Here.
+            </h1>
+            <p className="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+              Mind Buddy is your compassionate companion, offering tools and support for a healthier, happier you.
+            </p>
+            <a href="#features" className="hero-cta-button" data-aos="fade-up" data-aos-delay="400">
+              Explore Our Features <FaChevronDown className="arrow-down-icon" />
+            </a>
+          </div>
+        </section>
 
-      {/* Features Section */}
-      <section id="features" className="features">
-        <h2>Our Features</h2>
-        <div className="feature-grid">
-          <div className="feature-item" onClick={handleTalkAI}>
-            <img src={image6} alt="Talk to AI" />
-            <h3>Talk to AI</h3>
-            <p>If you want to share something with AI.</p>
+        <section id="features" className="features-section section-padding">
+          <div className="container">
+            <h2 className="section-title" data-aos="fade-up">Discover Your Path to Well-being</h2>
+            <p className="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+              Tools and resources designed to support your mental health journey.
+            </p>
+            <div className="feature-grid">
+              {featuresData.map((feature, index) => (
+                <div
+                  key={index}
+                  className={`feature-item ${feature.disabled ? 'disabled' : ''}`}
+                  onClick={() => !feature.disabled && feature.path && handleNavigation(feature.path)}
+                  data-aos="fade-up"
+                  data-aos-delay={feature.aosDelay || (index * 100).toString()}
+                >
+                  <div className="feature-icon-container">
+                    {feature.icon}
+                  </div>
+                  {/* If you had <img src={feature.image} .../> here, remove it if you don't want any images */}
+                  <h3 className="feature-title">{feature.title}</h3>
+                  <p className="feature-description">{feature.description}</p>
+                  {!feature.disabled && feature.path && (
+                    <span className="feature-cta">Learn More →</span>
+                  )}
+                  {feature.disabled && (
+                    <span className="feature-disabled-tag">Coming Soon</span>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="feature-item" onClick={handleAssessments}>
-            <img src={image2} alt="Assessments" />
-            <h3>Assessments</h3>
-            <p>Access a range of therapy sessions tailored to your needs.</p>
+        </section>
+
+        <section id="testimonials" className="testimonials-section section-padding">
+          <div className="container">
+            <h2 className="section-title" data-aos="fade-up">Trusted by People Like You</h2>
+            <div className="testimonial-grid">
+              {testimonialsData.map((testimonial, index) => (
+                <div key={index} className="testimonial-item" data-aos="fade-up" data-aos-delay={testimonial.aosDelay}>
+                  <p className="testimonial-quote">"{testimonial.quote}"</p>
+                  <h4 className="testimonial-author">- {testimonial.author}</h4>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="feature-item" onClick={handlegames}>
-            <img src={image3} alt="Games" />
-            <h3>Games & Fun</h3>
-            <p>Enjoy games that help you unwind and relax.</p>
-          </div>
-          <div className="feature-item" onClick={handleCommunity}>
-            <img src={image1} alt="Blogs" />
-            <h3>Community</h3>
-            <p>Read expert advice and stories on mental health.</p>
-          </div>
-          <div className="feature-item">
-            <img src={image4} alt="Track Medication" />
-            <h3>Track Your Medication</h3>
-            <p>Stay on top of your medication with our tracking tool.</p>
-          </div>
-          <div className="feature-item">
-            <img src={image5} alt="Expert Doctors" />
-            <h3>Expert Doctors</h3>
-            <p>Connect with licensed professionals for personalized support.</p>
+        </section>
+      </main>
+
+      <footer className="app-footer section-padding">
+        <div className="container footer-content">
+          <div className="footer-logo">Mind Buddy</div>
+          <p>© {new Date().getFullYear()} Mind Buddy. All rights reserved.</p>
+          <div className="footer-links">
+            <a href="/privacy-policy">Privacy Policy</a>
+            <span>|</span>
+            <a href="/terms-of-service">Terms of Service</a>
           </div>
         </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="testimonials">
-        <h2>What Our Users Say</h2>
-        <div className="testimonial-item">
-          <p>"Mind Buddy has helped me manage my mental health. I feel supported and heard."</p>
-          <h4>- Sarah P.</h4>
-        </div>
-        <div className="testimonial-item">
-          <p>"The daily check-ins and personalized advice make a big difference in my overall well-being."</p>
-          <h4>- John M.</h4>
-        </div>
-        <div className="testimonial-item">
-          <p>"I've been able to connect with amazing professionals who have helped me through tough times."</p>
-          <h4>- Emily W.</h4>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer>
-        <p>&copy; 2024 Mind Buddy. All rights reserved. | <a href="#">Privacy Policy</a></p>
       </footer>
     </div>
   );

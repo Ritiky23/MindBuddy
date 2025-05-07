@@ -1,218 +1,250 @@
 :root {
-    --primary-color: #6a5acd;
-    --primary-dark: #483d8b;
-    --secondary-color: #a095e5;
-    --tertiary-color: #d6cfff;
-    --calm-blue: #a0e7e5;
-    --calm-blue-dark: #74c6c3;
-    --calm-glow-color: rgba(160, 231, 229, 0.7);
-    --text-color: #4a5568;
-    --text-light: #f8f9fa;
-    --text-instruction: #5a6a85;
-    --bg-light: #f8f9fa;
-    --bg-container: linear-gradient(160deg, #fefcff 0%, #f5f3fc 40%, #edeaf9 100%);
-    --border-color: #e2e8f0;
-    --button-shadow: rgba(106, 90, 205, 0.1);
-    --button-shadow-hover: rgba(106, 90, 205, 0.18);
-    --container-shadow: rgba(106, 90, 205, 0.12);
-    --font-primary: 'Poppins', sans-serif;
-  }
-  
-  body {
-    font-family: var(--font-primary);
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-light);
-  }
-  
-  /* --- Main Container --- */
-  .game-view-container.breathing-game-container {
-    max-width: 950px;
-    width: 90%;
-    height: 85vh;
-    max-height: 800px;
-    min-height: 700px;
-    background: var(--bg-container);
-    box-shadow: 0 15px 40px var(--container-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 35px 45px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* --- Back Button --- */
-  .back-to-menu-button {
-    display: flex;
-    align-items: center;
-    background-color: #4e8bff;
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-  
-  .back-to-menu-button svg {
-    margin-right: 10px;
-    transition: transform 0.3s ease;
-  }
-  
-  .back-to-menu-button:hover {
-    background-color: #3a72cc;
-    transform: translateY(-2px);
-  }
-  
-  .back-to-menu-button:hover svg {
-    transform: scale(1.1);
-  }
-  
-  .back-to-menu-button:active {
-    background-color: #335db6;
-    transform: translateY(0);
-  }
-  
-  .back-to-menu-button:disabled {
-    background-color: #b0c6e1;
-    cursor: not-allowed;
-  }
-  
-  /* --- Title --- */
-  .game-title {
-    margin: 25px 0 35px;
-    font-size: 2.2rem;
-    color: var(--primary-dark);
-    font-weight: 600;
-    text-align: center;
-  }
-  
-  /* --- Visualizer --- */
-  .breathing-visualizer {
-    flex-grow: 1;
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    margin-bottom: 50px;
-  }
-  
-  /* --- Circle --- */
-  .breathing-circle {
-    width: 45%;
-    height: 45%;
-    border-radius: 50%;
-    background: radial-gradient(circle, var(--calm-blue), var(--calm-blue-dark));
-    position: absolute;
-    transition: transform 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95),
-                opacity 0.8s ease,
-                box-shadow 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  /* === Color Palette === */
+  --primary-color: #6a5acd;
+  --primary-dark: #483d8b;
+  --secondary-color: #a095e5;
+  --tertiary-color: #d6cfff;
+  --calm-blue: #a0e7e5;
+  --calm-blue-dark: #74c6c3;
+  --calm-glow-color: rgba(160, 231, 229, 0.7);
+
+  /* === Text Colors === */
+  --text-color: #4a5568;
+  --text-light: #f8f9fa;
+  --text-instruction: #5a6a85;
+
+  /* === Backgrounds & Borders === */
+  --bg-light: #f8f9fa;
+  --bg-container: linear-gradient(160deg, #fefcff 0%, #f5f3fc 40%, #edeaf9 100%);
+  --border-color: #e2e8f0;
+
+  /* === Shadows === */
+  --button-shadow: rgba(106, 90, 205, 0.1);
+  --button-shadow-hover: rgba(106, 90, 205, 0.18);
+  --container-shadow: rgba(106, 90, 205, 0.12);
+
+  /* === Typography === */
+  --font-primary: 'Poppins', sans-serif;
+}
+
+/* === Base Styles === */
+body {
+  font-family: var(--font-primary);
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-light);
+}
+
+/* === Main Container === */
+.game-view-container.breathing-game-container {
+  max-width: 950px;
+  width: 100%;
+  max-height: 800px;
+  min-height: 700px;
+  background: var(--bg-container);
+  box-shadow: 0 15px 40px var(--container-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 35px 45px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* === Back Button === */
+.back-to-menu-button {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4e8bff;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.back-to-menu-button svg {
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+.back-to-menu-button:hover {
+  background-color: #3a72cc;
+  transform: translateY(-2px);
+}
+
+.back-to-menu-button:hover svg {
+  transform: scale(1.1);
+}
+
+.back-to-menu-button:active {
+  background-color: #335db6;
+  transform: translateY(0);
+}
+
+.back-to-menu-button:disabled {
+  background-color: #b0c6e1;
+  cursor: not-allowed;
+}
+
+/* === Title === */
+.game-title {
+  margin: 25px 0 35px;
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--primary-dark);
+}
+
+/* === Breathing Visualizer === */
+.breathing-visualizer {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+/* === Breathing Circle === */
+.breathing-circle {
+  width: 45%;
+  height: 45%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--calm-blue), var(--calm-blue-dark));
+  position: absolute;
+  transform: scale(1);
+  opacity: 0.85;
+  box-shadow: 0 0 55px 10px var(--calm-glow-color);
+  transition:
+    transform 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95),
+    opacity 0.8s ease,
+    box-shadow 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+/* === Breathing Animations === */
+.inhale-animation {
+  animation: inhale var(--inhale-duration, 4s) cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+.hold-animation {
+  transform: scale(1.5);
+  opacity: 1;
+  box-shadow: 0 0 70px 15px var(--calm-glow-color);
+}
+
+.exhale-animation {
+  animation: exhale var(--exhale-duration, 6s) cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+@keyframes inhale {
+  from {
     transform: scale(1);
     opacity: 0.85;
     box-shadow: 0 0 55px 10px var(--calm-glow-color);
   }
-  
-  /* --- Animations --- */
-  .inhale-animation {
-    animation: inhale var(--inhale-duration, 4s) cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
-  }
-  
-  .hold-animation {
+  to {
     transform: scale(1.5);
     opacity: 1;
     box-shadow: 0 0 70px 15px var(--calm-glow-color);
   }
-  
-  .exhale-animation {
-    animation: exhale var(--exhale-duration, 6s) cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+@keyframes exhale {
+  from {
+    transform: scale(1.5);
+    opacity: 1;
+    box-shadow: 0 0 70px 15px var(--calm-glow-color);
   }
-  
-  @keyframes inhale {
-    from { transform: scale(1); opacity: 0.85; box-shadow: 0 0 55px 10px var(--calm-glow-color); }
-    to   { transform: scale(1.5); opacity: 1; box-shadow: 0 0 70px 15px var(--calm-glow-color); }
+  to {
+    transform: scale(1);
+    opacity: 0.85;
+    box-shadow: 0 0 55px 10px var(--calm-glow-color);
   }
-  
-  @keyframes exhale {
-    from { transform: scale(1.5); opacity: 1; box-shadow: 0 0 70px 15px var(--calm-glow-color); }
-    to   { transform: scale(1); opacity: 0.85; box-shadow: 0 0 55px 10px var(--calm-glow-color); }
-  }
-  
-  /* --- Instructions Text --- */
-  .breathing-instruction {
-    position: absolute;
-    font-size: 1.4rem;
-    color: var(--text-instruction);
-    font-weight: 400;
-    text-align: center;
-    z-index: 10;
+}
+
+/* === Instruction Text === */
+.breathing-instruction {
+  position: absolute;
+  z-index: 10;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--text-instruction);
+  text-align: center;
+  user-select: none;
+  opacity: 0;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+  animation: fadeInText 0.8s ease-out 0.2s forwards;
+}
+
+@keyframes fadeInText {
+  from {
     opacity: 0;
-    animation: fadeInText 0.8s ease-out 0.2s forwards;
-    user-select: none;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+    transform: translateY(8px);
   }
-  
-  @keyframes fadeInText {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* --- Controls --- */
-  .breathing-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 22px;
-    margin-top: 15px;
-    padding-bottom: 35px;
-  }
-  
-  .control-button {
-    padding: 12px 32px;
-    font-size: 1.05rem;
-    font-weight: 500;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: all 0.25s ease-out;
-    box-shadow: 0 4px 10px var(--button-shadow);
-    outline-offset: 3px;
-  }
-  
-  .control-button:focus-visible {
-    outline: 2px solid var(--secondary-color);
-  }
-  
-  /* --- Start Button --- */
-  .start-button {
-    background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
-    color: var(--text-light);
-  }
-  
-  .start-button:hover:enabled {
-    background: linear-gradient(45deg, #b1a5f0, #7c6ee0);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px var(--button-shadow-hover);
-  }
-  
-  /* --- Stop Button --- */
-  .stop-button {
-    background-color: #B0BEC5;
-    color: #fff;
-  }
-  
-  .stop-button:hover:enabled {
-    background-color: #90A4AE;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px var(--button-shadow-hover);
-  }
-  
+}
+
+/* === Controls === */
+.breathing-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  margin-top: 15px;
+  padding-bottom: 35px;
+}
+
+/* === Buttons === */
+.control-button {
+  padding: 12px 32px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px var(--button-shadow);
+  transition: all 0.25s ease-out;
+  outline-offset: 3px;
+}
+
+.control-button:focus-visible {
+  outline: 2px solid var(--secondary-color);
+}
+
+/* --- Start Button --- */
+.start-button {
+  background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+  color: var(--text-light);
+}
+
+.start-button:hover:enabled {
+  background: linear-gradient(45deg, #b1a5f0, #7c6ee0);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px var(--button-shadow-hover);
+}
+
+/* --- Stop Button --- */
+.stop-button {
+  background-color: #b0bec5;
+  color: #fff;
+}
+
+.stop-button:hover:enabled {
+  background-color: #90a4ae;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px var(--button-shadow-hover);
+}

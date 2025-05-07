@@ -1,0 +1,276 @@
+/* ChatWhisperInternal.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --internal-font: 'Poppins', sans-serif;
+  --internal-text-light: #f0f4f8; /* Light text, good on dark/semi-transparent backgrounds */
+  --internal-text-medium: #bdc3c7;
+  --internal-text-darker: #34495e; /* For contrast on lighter internal elements if any */
+
+  --internal-accent-primary: #8e44ad; /* Purple, similar to original buttons */
+  --internal-accent-secondary: #3498db; /* Blue for contrast/status */
+  --internal-success: #2ecc71; /* Green for listening */
+  --internal-error: #e74c3c;
+
+  --internal-bubble-user-bg: rgba(52, 152, 219, 0.15); /* Light blueish */
+  --internal-bubble-ai-bg: rgba(142, 68, 173, 0.15);  /* Light purplish */
+
+  --internal-radius-md: 10px;
+  --internal-radius-lg: 15px;
+  --internal-shadow-subtle: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.language-switcher-container {
+ 
+    z-index: 10;
+  }
+  
+  .language-switch-button {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--internal-text-light);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 6px 12px;
+    border-radius: var(--internal-radius-md);
+    cursor: pointer;
+    font-family: var(--internal-font);
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .language-switch-button:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  /* Adjust header padding if language switcher is absolutely positioned */
+  .chat-header-internal {
+    padding: 10px 60px 15px 0; /* More right padding if switcher is on right */
+    position: relative; /* To contain absolutely positioned elements if needed */
+  }
+  .language-switch {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 999;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    padding: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .language-switch:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  
+.chat-whisper-content-wrapper {
+  font-family: var(--internal-font);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Fill the parent modal */
+  width: 100%;
+  color: var(--internal-text-light); /* Default text color for inside the modal */
+  position: relative; /* For absolutely positioned elements if needed */
+}
+
+
+
+.chat-header-internal h1 {
+  font-size: clamp(1.8rem, 4vw, 2.2rem); /* Responsive title */
+  font-weight: 600;
+  color: var(--internal-text-light); /* Ensure white/light color from inline styles is respected or overridden */
+  margin: 0 0 5px 0;
+}
+
+.chat-header-internal .quote-internal {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-style: italic;
+  color: var(--internal-text-medium); /* Lighter than main text */
+  margin: 0;
+}
+
+.visualizer-area-internal {
+  margin: 5px auto; /* Smaller margin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0; /* Prevent shrinking too much */
+  position: relative; /* For glow or other effects */
+  /* Control Lottie size here. Max-width/height or fixed. */
+  /* width: clamp(200px, 50vw, 300px); */ /* Example responsive width */
+  /* height: clamp(200px, 50vw, 300px); */
+}
+/* Targeting Lottie's div directly */
+.visualizer-area-internal > div {
+    width: clamp(200px, 50vw, 300px) !important; /* Override inline height/width for Lottie */
+    height: auto !important; /* Maintain aspect ratio */
+}
+.visualizer-area-internal svg {
+    width: 100% !important;
+    height: 100% !important;
+}
+.visualizer-area-internal.active-glow::before { /* Optional glow effect */
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 5px var(--internal-accent-primary), 0 0 30px 10px rgba(142, 68, 173, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: -1;
+}
+.visualizer-area-internal.active-glow.active::before {
+    opacity: 1;
+}
+
+
+.conversation-log-internal {
+  flex-grow: 1; /* Takes available space */
+  overflow-y: auto;
+  padding: 10px;
+  margin: 10px 0;
+  background: rgba(0,0,0,0.2); /* Subtle dark background for log */
+  border-radius: var(--internal-radius-md);
+  text-align: left;
+  min-height: 100px; /* Ensure it has some height */
+  scrollbar-width: thin;
+  scrollbar-color: var(--internal-accent-primary) transparent;
+}
+.conversation-log-internal::-webkit-scrollbar { width: 5px; }
+.conversation-log-internal::-webkit-scrollbar-track { background: transparent; }
+.conversation-log-internal::-webkit-scrollbar-thumb {
+  background-color: var(--internal-accent-primary);
+  border-radius: 5px;
+}
+
+.message-bubble-internal {
+  padding: 8px 12px;
+  border-radius: var(--internal-radius-md);
+  margin-bottom: 8px;
+  max-width: 80%;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+  animation: popInMessage 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  opacity: 0;
+  transform: scale(0.9);
+}
+@keyframes popInMessage {
+  to { opacity: 1; transform: scale(1); }
+}
+
+.message-bubble-internal.user {
+  background: var(--internal-bubble-user-bg);
+  color: var(--internal-text-light);
+  margin-left: auto;
+  border-top-right-radius: 4px;
+}
+.message-bubble-internal.ai {
+  background: var(--internal-bubble-ai-bg);
+  color: var(--internal-text-light);
+  margin-right: auto;
+  border-top-left-radius: 4px;
+}
+.message-bubble-internal strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+  font-size: 0.7rem;
+  opacity: 0.8;
+  color: var(--internal-text-medium);
+}
+.message-bubble-internal.user strong { color: var(--internal-accent-secondary); }
+.message-bubble-internal.ai strong { color: var(--internal-accent-primary); }
+.message-bubble-internal em { /* Live transcript within a bubble */
+  color: var(--internal-text-medium);
+  font-style: italic;
+}
+
+
+.status-indicator-internal {
+  padding: 8px 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-height: 20px; /* To prevent layout shifts */
+  text-align: center;
+  color: var(--internal-text-medium);
+  transition: color 0.3s ease, background-color 0.3s ease;
+  animation: fadeInStatusText 0.5s ease-out;
+}
+@keyframes fadeInStatusText {
+    from { opacity: 0; } to { opacity: 1; }
+}
+.status-indicator-internal.listening { color: var(--internal-success); }
+.status-indicator-internal.processing { color: var(--internal-accent-secondary); }
+.status-indicator-internal.speaking { color: var(--internal-accent-primary); }
+.status-indicator-internal.error { color: var(--internal-error); }
+
+
+.controls-internal {
+  padding-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Maintained from original request */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0; /* Prevent controls from shrinking */
+}
+
+.chat-button-internal {
+  /* Styles will be similar to original btnStyle, but as classes */
+  background: linear-gradient(145deg, var(--internal-accent-primary), #7a1b9c); /* #7a1b9c is darker shade of original purple */
+  color: white;
+  border: none;
+  border-radius: 50px; /* Original rounded style */
+  padding: 0.8rem 1.2rem; /* Slightly adjusted padding for responsiveness */
+  font-size: 1rem; /* Slightly smaller for internal elements */
+  font-family: var(--internal-font);
+  cursor: pointer;
+  transition: all 0.25s ease-out;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 160px; /* Give buttons some presence */
+  justify-content: center;
+}
+
+.chat-button-internal:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.1);
+}
+.chat-button-internal:active:not(:disabled) {
+  transform: translateY(0px) scale(0.98);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.chat-button-internal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #585858; /* Dark grey for disabled */
+  box-shadow: none;
+}
+.chat-button-internal .icon { font-size: 1.1em; }
+
+
+/* Transcript display (if separate from conversation log) */
+.live-transcript-display {
+    background: rgba(0,0,0,0.3);
+    color: var(--internal-text-light);
+    padding: 8px 12px;
+    border-radius: var(--internal-radius-md);
+    font-size: 0.9rem;
+    margin: 5px 20px; /* Give some horizontal margin */
+    min-height: 1.5em; /* Prevent collapse when empty */
+    text-align: center;
+}
+.live-transcript-display strong {
+    color: var(--internal-accent-secondary);
+    margin-right: 5px;
+}

@@ -1,0 +1,161 @@
+/* ZenSandGarden.css */
+.zen-garden-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align content to top */
+    width: 100%;
+    height: calc(100% - 40px); /* Adjust based on padding of parent */
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f0f4f8; /* Light, calming background for the game page */
+    border-radius: 12px; /* If shown within a modal or specific area */
+    overflow: hidden; /* Prevent canvas from causing scrollbars */
+  }
+  
+  .zen-garden-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  
+  .zen-back-button {
+    background: #d1d8e0;
+    color: #4a4a4a;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s ease;
+  }
+  .zen-back-button:hover {
+    background: #c1c8d0;
+  }
+  .zen-back-button svg {
+    margin-bottom: -1px; /* Slight alignment */
+  }
+  
+  .zen-game-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-left: 20px;
+    font-weight: 600;
+  }
+  
+  .zen-garden-main {
+    display: flex;
+    flex-direction: column; /* Stack toolbar above canvas on small screens */
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Max width for the garden itself */
+    margin: 0 auto;
+    flex-grow: 1; /* Allow canvas to take available space */
+  }
+  
+  .zen-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .tool-button {
+    background-color: #f0f0f0;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+  }
+  .tool-button svg {
+    color: #555;
+    width: 24px; /* Ensure icons are consistently sized */
+    height: 24px;
+  }
+  
+  .tool-button:hover {
+    background-color: #e0e0e0;
+  }
+  .tool-button:active {
+    transform: scale(0.95);
+  }
+  
+  .tool-button.active {
+    background-color: #c0d8f0; /* Light blue for active */
+    border-color: #79a6d2;
+  }
+  .tool-button.active svg {
+    color: #2c5282;
+  }
+  
+  .tool-button.clear-button:hover {
+      background-color: #ffdddd; /* Light red for clear hover */
+  }
+  .tool-button.clear-button:hover svg {
+      color: #c53030;
+  }
+  
+  .zen-canvas {
+    width: 100%;
+    height: 0; /* Aspect ratio trick part 1 */
+    padding-bottom: 65%; /* Aspect ratio (e.g., 4:3). Adjust as needed. This makes height 75% of width */
+    /* Or set fixed height: height: 500px; */
+    background-color: #E0C9A6; /* Fallback, should be covered by JS */
+    border-radius: 10px;
+    box-shadow: 0 0 0 8px #c8b494, 0 0 0 12px #b8a484; /* Wooden frame effect */
+    /* Simpler border: border: 8px solid #c8b494; */
+    cursor: crosshair; /* Default cursor, can be changed by tool */
+    touch-action: none; /* Prevents scrolling on canvas during touch draw */
+    max-height: 600px; /* Ensure it doesn't get too tall on very narrow screens if using aspect ratio */
+  }
+  
+  .zen-garden-instructions {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+  }
+  
+  /* Fade-in animation */
+  .fade-in {
+    animation: fadeInAnimation 0.5s ease-out forwards;
+  }
+  @keyframes fadeInAnimation {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .zen-garden-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .zen-game-title {
+      margin-left: 0;
+      font-size: 1.5rem;
+    }
+    .zen-toolbar {
+      flex-wrap: wrap; /* Allow tools to wrap */
+      justify-content: center;
+    }
+    .zen-canvas {
+       padding-bottom: 75%; /* Adjust aspect ratio for mobile if needed, e.g., more square */
+       border: 5px solid red !important;
+    }
+  }
