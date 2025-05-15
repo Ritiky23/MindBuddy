@@ -1,0 +1,312 @@
+/* --- NatureSoundGame.css --- */
+:root {
+    --nature-bg: #e8f5e9; /* Light green background */
+    --nature-container-bg: #ffffff;
+    --nature-border: #a5d6a7; /* Softer green border */
+    --nature-text: #333;
+    --nature-text-light: #555;
+    --nature-accent: #388e3c; /* Darker green accent */
+    --nature-accent-light: #66bb6a;
+    --nature-item-bg: #f1f8e9;
+    --nature-item-hover: #e8f5e9;
+    --nature-playing-glow: rgba(76, 175, 80, 0.3);
+    --nature-error: #d32f2f;
+    --nature-error-bg: #ffebee;
+}
+
+.nature-sound-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 950px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: var(--nature-container-bg);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    color: var(--nature-text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 80vh;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Header */
+.nature-sound-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--nature-border);
+}
+
+.nature-back-button, .nature-stop-all-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: transparent;
+    color: var(--nature-accent);
+    border: 1px solid var(--nature-border);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+}
+.nature-stop-all-button {
+    background-color: var(--nature-accent-light);
+    color: white;
+    border-color: var(--nature-accent);
+}
+
+.nature-back-button svg { margin-right: 6px; }
+.nature-stop-all-button svg { margin-right: 6px; } /* If adding an icon */
+
+.nature-back-button:hover {
+    background-color: var(--nature-bg);
+    color: var(--nature-accent);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.nature-stop-all-button:hover {
+    background-color: var(--nature-accent);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+.nature-game-title {
+    margin: 0;
+    font-size: 1.6em;
+    font-weight: 400;
+    color: var(--nature-accent);
+    text-align: center;
+    flex-grow: 1;
+    padding: 0 15px;
+}
+
+/* Main Area */
+.nature-sound-main {
+    flex-grow: 1;
+    padding: 10px 0;
+}
+
+.sound-controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 20px;
+}
+
+.sound-control-item {
+    background-color: var(--nature-item-bg);
+    border-radius: 8px;
+    padding: 15px 20px;
+    border: 1px solid var(--nature-border);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    overflow: hidden; /* Ensure contents don't overflow */
+    min-height: 120px; /* Ensure consistent height */
+    justify-content: space-between; /* Push actions to bottom */
+}
+
+.sound-control-item:hover {
+    border-color: var(--nature-accent-light);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.sound-control-item.playing {
+    border-left: 5px solid var(--nature-accent); /* Indicate playing */
+    /* box-shadow: 0 0 15px var(--nature-playing-glow); */
+    padding-left: 15px; /* Adjust padding because of border */
+}
+.sound-control-item.loading {
+   opacity: 0.7;
+   pointer-events: none; /* Disable interactions while loading */
+}
+.sound-control-item.error {
+   border-left: 5px solid var(--nature-error);
+   background-color: var(--nature-error-bg);
+   padding-left: 15px;
+}
+
+
+.sound-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    font-size: 1.1em;
+    color: var(--nature-accent);
+}
+.sound-info svg { /* Style the main icon */
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+}
+
+.sound-name {
+    flex-grow: 1;
+}
+
+.sound-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    color: var(--nature-text-light);
+}
+.sound-status.error-indicator {
+    color: var(--nature-error);
+    font-weight: 500;
+}
+.error-text {
+    display: inline-block; /* Keep on same line */
+}
+
+/* Loading spinner animation */
+.loading-indicator svg {
+   animation: spin 1.5s linear infinite;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+
+.sound-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: auto; /* Push to bottom if using flex-direction column */
+}
+
+.play-pause-button {
+    background-color: #fff;
+    border: 1px solid var(--nature-border);
+    color: var(--nature-accent);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+.play-pause-button:hover {
+    background-color: var(--nature-bg);
+    transform: scale(1.05);
+}
+.play-pause-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    background-color: #eee;
+}
+.play-pause-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-grow: 1; /* Take remaining space */
+    color: var(--nature-text-light);
+}
+.volume-control svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.volume-slider {
+    flex-grow: 1;
+    cursor: pointer;
+    height: 6px;
+    background: var(--nature-border);
+    border-radius: 3px;
+    appearance: none; /* Override default look */
+    -webkit-appearance: none;
+}
+/* Thumb (Chrome, Edge, Safari) */
+.volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--nature-accent);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -5px; /* Center thumb vertically */
+    transition: background-color 0.15s ease;
+}
+/* Thumb (Firefox) */
+.volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--nature-accent);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none; /* Remove Firefox default border */
+     transition: background-color 0.15s ease;
+}
+
+.volume-slider:hover::-webkit-slider-thumb { background: var(--nature-accent-light); }
+.volume-slider:hover::-moz-range-thumb { background: var(--nature-accent-light); }
+
+.volume-slider:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.volume-slider:disabled::-webkit-slider-thumb { background: #ccc; }
+.volume-slider:disabled::-moz-range-thumb { background: #ccc; }
+
+
+.volume-value {
+    font-size: 0.85em;
+    min-width: 35px; /* Reserve space */
+    text-align: right;
+    color: var(--nature-text-light);
+}
+
+
+/* Instructions */
+.nature-sound-instructions {
+    text-align: center;
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--nature-border);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .nature-game-title { font-size: 1.4em; }
+    .nature-sound-container { padding: 20px; }
+    .sound-controls-grid { grid-template-columns: 1fr; /* Stack items on smaller screens */ }
+    .sound-control-item { padding: 15px; }
+    .sound-control-item.playing { padding-left: 15px; } /* Keep padding consistent */
+}
+
+@media (max-width: 480px) {
+    .nature-game-title { font-size: 1.2em; }
+    .nature-back-button span { display: none; }
+    .nature-back-button { padding: 8px 10px; }
+    .nature-sound-header { margin-bottom: 20px; padding-bottom: 10px; }
+    .sound-info { font-size: 1em; }
+    .sound-actions { flex-wrap: wrap; /* Allow wrapping if needed */ }
+    .volume-control { min-width: 150px; /* Ensure slider doesn't get too small */ }
+}

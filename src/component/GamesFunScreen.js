@@ -3,6 +3,12 @@ import { useNavigate } from 'react-router-dom'; // ✅ Import navigate
 import './GamesFunScreen.css';
 import BreathingGame from './games/BreathingGame';
 import ZenSandGarden from './games/ZenSandGame';
+import NatureSoundGame from './games/NatureSoundGame';
+import MindfulMatching from './games/MindfulMatching';
+import GratitudeTree from './games/GratitudeTree';
+import ColorFlow from './games/Colorflow';
+
+
 
 // --- Placeholder Game Components (Replace with actual games later) ---
 const PlaceholderGame = ({ gameTitle, onBack }) => (
@@ -97,10 +103,13 @@ const GamesFunScreen = () => {
       case 'zenGarden':
         return <ZenSandGarden gameTitle={gameTitle} onBack={handleBackToMenu} />;
       case 'colorFlow':
-      case 'soundScape':
-      case 'mindfulMatch':
+           return <ColorFlow gameTitle={gameTitle} onBack={handleBackToMenu} />;
+      case 'soundScape': 
+         return <NatureSoundGame gameTitle={gameTitle} onBack={handleBackToMenu} />;
+      case 'mindfulMatch': 
+       return <MindfulMatching gameTitle={gameTitle} onBack={handleBackToMenu} />;
       case 'gratitudeTree':
-        return <PlaceholderGame gameTitle={gameTitle} onBack={handleBackToMenu} />;
+        return <GratitudeTree gameTitle={gameTitle} onBack={handleBackToMenu} />;
       default:
         return null;
     }

@@ -81,7 +81,8 @@ const HomeScreen = () => {
       // image: image4MedTrack,
       icon: <FaTablets />,
       aosDelay: "500",
-      disabled: true,
+      path: '/medicationtracker',
+ 
     },
     {
       title: 'Expert Connect',
@@ -89,7 +90,7 @@ const HomeScreen = () => {
       // image: image5Experts,
       icon: <FaUserMd />,
       aosDelay: "600",
-      disabled: true,
+      path: '/expertdoctor',
     },
   ];
 

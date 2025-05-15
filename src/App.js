@@ -8,6 +8,8 @@ import Questionnaire from "./component/Questionnaire";
 import CommunityScreen from "./component/CommunityScreen";
 import "./App.css";
 import GamesFunScreen from "./component/GamesFunScreen";
+import MedicationTrackerPage from "./component/MedicationTrackerPage";
+import ExpertDoctorsPage from "./component/ExpertDoctorsPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -22,6 +24,8 @@ const App = () => {
         <Route path="/community" element={<CommunityScreen/>} />
           <Route path="/chatwhisper" element={<ChatWhisper/>} />
           <Route path="/questionnaire" element={<Questionnaire />} />
+          <Route path="/medicationtracker" element={<MedicationTrackerPage />} />
+          <Route path="/expertdoctor" element={<ExpertDoctorsPage />} />
           <Route path="/gamesfun" element={<GamesFunScreen />} />
         <Route path="/signup" element={<SignUp setAuth={setIsAuthenticated} />} />
         <Route path="/login" element={<Login/>} />

@@ -1,0 +1,369 @@
+/* --- GratitudeTree.css --- */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap'); /* Example Font */
+
+:root {
+    --gratitude-bg: linear-gradient(135deg, #e0f2f1 0%, #f1f8e9 100%); /* Subtle gradient bg */
+    --gratitude-container-bg: rgba(255, 255, 255, 0.9); /* Slightly transparent */
+    --gratitude-border: #b2dfdb; /* Teal-ish border */
+    --gratitude-text: #263238; /* Dark grey-blue text */
+    --gratitude-title-color: #00695c; /* Dark Teal */
+    --gratitude-accent: #26a69a; /* Teal */
+    --gratitude-accent-hover: #00897b;
+    --gratitude-danger: #ef5350;
+    --gratitude-danger-hover: #e53935;
+    --gratitude-note-text: #004d40; /* Very dark teal text on notes */
+    --gratitude-note-shadow: rgba(46, 125, 50, 0.2);
+    --gratitude-input-bg: rgba(255, 255, 255, 0.8);
+    --gratitude-placeholder: #78909c;
+
+    /* Define leaf rotation variable for CSS animation */
+    --leaf-rotation: 0deg;
+}
+
+.gratitude-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    /* Use the gradient background */
+    background: var(--gratitude-bg);
+    border-radius: 16px;
+    /* Softer shadow */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    color: var(--gratitude-text);
+    /* Apply the chosen font */
+    font-family: 'Nunito', sans-serif;
+    min-height: 90vh;
+    overflow: hidden; /* Prevent content spill */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Header */
+.gratitude-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--gratitude-border);
+}
+
+/* General Button Styling */
+.gratitude-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px; /* Space between icon and text */
+    padding: 9px 16px;
+    border: 1px solid transparent; /* Start transparent */
+    border-radius: 20px; /* Pill shape */
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600; /* Slightly bolder */
+    transition: all 0.25s ease; /* Smooth transition for all properties */
+    background-color: transparent;
+}
+.gratitude-button svg { /* Embedded icon style */
+    width: 18px; height: 18px;
+}
+.gratitude-button span { /* Text style */
+    line-height: 1; /* Ensure alignment */
+}
+
+/* Specific Button Types */
+.gratitude-button.subtle {
+    color: var(--gratitude-title-color);
+    border-color: var(--gratitude-border);
+}
+.gratitude-button.subtle:hover {
+    background-color: rgba(0, 105, 92, 0.05); /* Faint teal background */
+    border-color: var(--gratitude-title-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.gratitude-button.danger {
+    color: var(--gratitude-danger);
+    border-color: #ffcdd2; /* Light red border */
+}
+.gratitude-button.danger:hover {
+    background-color: rgba(239, 83, 80, 0.05); /* Faint red background */
+    border-color: var(--gratitude-danger);
+    color: var(--gratitude-danger-hover);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.gratitude-button.primary {
+    background-color: var(--gratitude-accent);
+    color: white;
+    border-color: var(--gratitude-accent);
+    box-shadow: 0 2px 5px rgba(38, 166, 154, 0.2);
+}
+.gratitude-button.primary:hover:not(:disabled) {
+    background-color: var(--gratitude-accent-hover);
+    border-color: var(--gratitude-accent-hover);
+    box-shadow: 0 4px 8px rgba(0, 137, 123, 0.25);
+    transform: translateY(-1px); /* Slight lift */
+}
+.gratitude-button.primary:disabled {
+    background-color: #b2dfdb; /* Lighter teal when disabled */
+    border-color: #b2dfdb;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Add button specific styles */
+.add-button {
+    padding: 12px 20px; /* Make slightly larger */
+    font-size: 1em;
+}
+
+.gratitude-title {
+    margin: 0;
+    font-size: 1.7em;
+    font-weight: 300; /* Lighter weight title */
+    color: var(--gratitude-title-color);
+    text-align: center;
+    flex-grow: 1;
+    padding: 0 15px;
+}
+
+/* Main Area */
+.gratitude-main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 25px; /* Increased gap */
+}
+
+/* Tree Area */
+.gratitude-tree-area {
+    position: relative;
+    width: 100%;
+    min-height: 40vh; /* Use viewport height */
+    max-height: 500px; /* Max height */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align tree base to bottom */
+    padding-bottom: 20px; /* Space below tree */
+    flex-grow: 1;
+    overflow: hidden; /* Clip notes if they go too far */
+}
+
+.gratitude-tree-svg {
+    width: 55%;
+    max-width: 320px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(2px 4px 5px rgba(0, 0, 0, 0.15)); /* Softer drop shadow */
+}
+
+.notes-container {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0; /* Cover the area */
+    /* Adjust if needed based on tree SVG */
+    padding-bottom: 15%; /* Don't let leaves go below trunk base */
+    pointer-events: none;
+}
+
+/* Gratitude Note Container (for positioning & hover trigger) */
+.gratitude-note-container {
+    position: absolute;
+    transform-origin: 50% 100%; /* Rotate around bottom center */
+    /* Apply rotation using CSS variable */
+    transform: rotate(var(--leaf-rotation));
+    transition: transform 0.3s ease; /* Smooth hover effect */
+    pointer-events: auto; /* Enable hover on the container */
+    z-index: 1; /* Default stacking */
+    cursor: default;
+}
+
+.gratitude-note-container:hover {
+    transform: scale(1.1) rotate(var(--leaf-rotation)); /* Scale up on hover */
+    z-index: 10; /* Bring to front */
+}
+
+/* Inner Gratitude Note (styling the leaf appearance) */
+.gratitude-note {
+    display: flex; /* Use flex for icon/text alignment */
+    align-items: center;
+    position: relative; /* For potential absolute elements inside */
+    width: auto; /* Let content decide width */
+    min-width: 50px;
+    max-width: 180px; /* Max width */
+    padding: 5px 8px 5px 5px; /* Adjust padding */
+    border-radius: 50% 20% / 40% 40%; /* More leaf-like shape */
+    color: var(--gratitude-note-text);
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.3;
+    overflow: hidden; /* Hide overflow */
+    box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.06), /* Inner shadow */
+                0 1px 2px var(--gratitude-note-shadow); /* Outer shadow */
+    /* Use the SVG as a mask or background maybe? Let's use contained SVG */
+}
+
+/* Leaf SVG inside the note */
+.leaf-shape-svg {
+    width: auto; /* Adjust size as needed */
+    height: 25px; /* Control leaf height */
+    flex-shrink: 0; /* Prevent SVG from shrinking */
+    margin-right: 5px; /* Space between icon and text */
+    vertical-align: middle;
+    /* Optional: slightly adjust position */
+    position: relative;
+    top: -1px;
+}
+/* Style the path within the leaf SVG */
+.leaf-path {
+    transition: filter 0.3s ease;
+}
+.gratitude-note-container:hover .leaf-path {
+     filter: brightness(1.1); /* Slightly brighten on hover */
+}
+
+
+.note-text {
+    white-space: nowrap; /* Keep text on one line */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ... for long text */
+    flex-grow: 1; /* Allow text to take space */
+}
+
+
+/* Grow-in Animation - Updated */
+@keyframes growIn {
+  0% {
+    transform: scale(0.1) rotate(-45deg) translateY(30px);
+    opacity: 0;
+  }
+  70% {
+      opacity: 1;
+      transform: scale(1.1) rotate(calc(var(--leaf-rotation) + 5deg)); /* Overshoot slightly */
+  }
+  100% {
+    transform: scale(1) rotate(var(--leaf-rotation)); /* Settle */
+    opacity: 1;
+  }
+}
+
+.grow-in {
+  /* Apply the animation */
+  animation: growIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Hovered Note Tooltip */
+.hovered-note-tooltip {
+    position: absolute;
+    bottom: 105%; /* Position above the tree area */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    white-space: normal; /* Allow wrapping */
+    max-width: 90%;
+    text-align: center;
+    z-index: 20; /* Above leaves */
+    pointer-events: none; /* Don't interact with tooltip */
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* Input Area */
+.gratitude-input-area {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: var(--gratitude-input-bg);
+    border-radius: 12px;
+    border: 1px solid var(--gratitude-border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s ease; /* Transition for error state */
+}
+.gratitude-input-area.has-error {
+    border-color: var(--gratitude-danger);
+    box-shadow: 0 0 0 3px rgba(239, 83, 80, 0.2);
+}
+
+
+.gratitude-textarea {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--gratitude-border);
+    font-size: 1em;
+    font-family: inherit; /* Use Nunito */
+    resize: vertical;
+    min-height: 70px;
+    line-height: 1.5;
+    background-color: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.gratitude-textarea::placeholder {
+    color: var(--gratitude-placeholder);
+    font-style: italic;
+}
+.gratitude-textarea:focus {
+    outline: none;
+    border-color: var(--gratitude-accent);
+    box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.15);
+}
+.gratitude-input-area.has-error .gratitude-textarea {
+    border-color: var(--gratitude-danger);
+}
+.gratitude-input-area.has-error .gratitude-textarea:focus {
+     box-shadow: 0 0 0 3px rgba(239, 83, 80, 0.2);
+}
+
+
+/* Instructions Footer */
+.gratitude-instructions {
+    text-align: center;
+    font-size: 0.9em;
+    color: #607d8b; /* Slightly muted color */
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gratitude-border);
+    font-weight: 300; /* Lighter weight */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .gratitude-container { padding: 20px; margin: 20px; }
+    .gratitude-title { font-size: 1.5em; }
+    .gratitude-tree-area { min-height: 35vh; max-height: 400px; }
+    .gratitude-tree-svg { width: 70%; }
+    .gratitude-input-area { flex-direction: column; align-items: stretch; }
+    .add-button { align-self: flex-end; margin-top: 10px; }
+    .gratitude-note { font-size: 0.75rem; max-width: 150px; }
+    .leaf-shape-svg { height: 22px; }
+    .hovered-note-tooltip { font-size: 0.8em; }
+}
+
+@media (max-width: 480px) {
+    .gratitude-container { padding: 15px; margin: 10px; }
+    .gratitude-title { font-size: 1.3em; }
+    .gratitude-button span { display: none; } /* Hide button text */
+    .gratitude-button { padding: 9px 10px; gap: 0; }
+    .add-button span { display: inline; } /* Keep 'Add Leaf' text */
+    .add-button { padding: 10px 15px; }
+    .gratitude-tree-area { min-height: 30vh; max-height: 350px; padding-bottom: 10px; }
+    .gratitude-tree-svg { width: 85%; }
+    .gratitude-textarea { min-height: 60px; padding: 10px; }
+    .gratitude-note { font-size: 0.7rem; max-width: 120px; }
+    .leaf-shape-svg { height: 18px; margin-right: 3px; }
+    .hovered-note-tooltip { display: none; /* Tooltip might be too intrusive on small screens */ }
+}

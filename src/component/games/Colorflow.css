@@ -1,0 +1,336 @@
+/* --- ColorFlow.css --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --flow-bg: #f0f2f5; /* Light neutral background */
+    --flow-grid-bg: #ffffff;
+    --flow-border: #d9dce1;
+    --flow-text: #333;
+    --flow-title-color: #0052cc; /* Primary blue */
+    --flow-accent: #0065ff;
+    --flow-accent-hover: #0052cc;
+    --flow-cell-border: #e8eaed;
+    --flow-dot-size: 60%; /* Size of the dot relative to cell */
+    --flow-path-width: 20%; /* Visual thickness of path relative to cell */
+    --flow-path-cap-radius: 5px; /* Rounded ends for paths */
+    --flow-completed-opacity: 0.8;
+
+    /* Grid size variable set by JS */
+    /* --grid-size: 5; */
+}
+
+.colorflow-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px; /* Adjust for optimal grid view */
+    margin: 25px auto;
+    padding: 25px;
+    background-color: var(--flow-bg);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    color: var(--flow-text);
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    min-height: 80vh;
+    position: relative; /* For overlays */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeIn 0.5s ease-out forwards; }
+
+/* Header */
+.colorflow-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--flow-border);
+    gap: 15px; /* Add gap between header elements */
+}
+
+.level-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
+    justify-content: center;
+    min-width: 0; /* Allow shrinking */
+}
+
+.colorflow-title {
+    margin: 0;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--flow-title-color);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.colorflow-title span {
+    font-weight: 400;
+    font-size: 0.9em;
+    color: #555;
+}
+
+
+/* Buttons (Shared Style) */
+.colorflow-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Center content */
+    gap: 5px;
+    padding: 8px 12px; /* Adjust padding */
+    border: 1px solid transparent;
+    border-radius: 8px; /* Slightly less round */
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    line-height: 1; /* Prevent layout shifts */
+    flex-shrink: 0; /* Prevent buttons shrinking too much */
+}
+.colorflow-button svg { width: 18px; height: 18px; }
+
+.colorflow-button.subtle {
+    color: #555;
+    border-color: var(--flow-border);
+}
+.colorflow-button.subtle:hover {
+    background-color: #e8eaed;
+    border-color: #cdd2d8;
+}
+
+.colorflow-button.level-nav {
+    padding: 6px 8px; /* Smaller padding */
+    font-size: 1.2em; /* Bigger arrows */
+    color: var(--flow-accent);
+    border: 1px solid var(--flow-border);
+}
+.colorflow-button.level-nav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: transparent;
+    border-color: var(--flow-border);
+}
+.colorflow-button.level-nav:hover:not(:disabled) {
+     background-color: rgba(0, 101, 255, 0.08);
+     border-color: var(--flow-accent);
+}
+
+.colorflow-button.primary { /* For Win Overlay */
+    background-color: var(--flow-accent);
+    color: white;
+    border-color: var(--flow-accent);
+    box-shadow: 0 1px 3px rgba(0, 101, 255, 0.2);
+}
+.colorflow-button.primary:hover {
+    background-color: var(--flow-accent-hover);
+    border-color: var(--flow-accent-hover);
+    box-shadow: 0 2px 6px rgba(0, 82, 204, 0.3);
+}
+.colorflow-button.large { /* For Win Overlay */
+     padding: 10px 20px;
+     font-size: 1em;
+     border-radius: 8px;
+     margin: 5px; /* Spacing in overlay */
+}
+
+
+/* Grid Area */
+.colorflow-grid-area {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* Padding around the grid */
+    min-height: 300px; /* Ensure minimum grid area */
+    user-select: none; /* Prevent text selection during drag */
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+}
+
+.colorflow-grid {
+    display: grid;
+    /* Use CSS variable set by JS for grid size */
+    grid-template-columns: repeat(var(--grid-size, 5), 1fr);
+    grid-template-rows: repeat(var(--grid-size, 5), 1fr);
+    /* Calculate aspect ratio dynamically based on grid size if needed, or set fixed size */
+    width: 95%; /* Max width */
+    max-width: 500px; /* Limit max grid size */
+    aspect-ratio: 1 / 1; /* Keep it square */
+    background-color: var(--flow-grid-bg);
+    border: 1px solid var(--flow-border);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    overflow: hidden; /* Clip content like paths */
+    position: relative; /* For pseudo-elements if needed */
+}
+
+.grid-cell {
+    position: relative; /* For dot positioning and path connectors */
+    border-right: 1px solid var(--flow-cell-border);
+    border-bottom: 1px solid var(--flow-cell-border);
+    transition: background-color 0.1s ease-out; /* Fast path color transition */
+    /* --path-color and --dot-color set inline */
+}
+/* Remove outer borders */
+.grid-cell:nth-child(var(--grid-size)n) { border-right: none; }
+.colorflow-grid > .grid-cell:nth-last-child(-n + var(--grid-size)) { border-bottom: none; }
+
+/* Path Styling */
+.grid-cell.is-path {
+    /* Background color is set inline */
+    /* Subtle indication for completed paths */
+}
+.grid-cell.is-path.is-completed {
+    opacity: var(--flow-completed-opacity);
+}
+
+/* Path Connection Styling (Using pseudo-elements) */
+/* This creates small squares connecting adjacent path cells */
+.grid-cell.is-path::before,
+.grid-cell.is-path::after {
+    content: '';
+    position: absolute;
+    background-color: var(--path-color); /* Use the path color */
+    z-index: 1; /* Below the dot */
+    opacity: var(--flow-completed-opacity); /* Match completed state */
+}
+.grid-cell.is-path.is-completed::before,
+.grid-cell.is-path.is-completed::after {
+    opacity: 1; /* Make connector fully opaque when path is completed */
+}
+
+/* Connector sizing */
+.grid-cell.is-path::before { /* Vertical connector */
+    width: var(--flow-path-width);
+    height: 50%; /* Half the cell height */
+    left: 50%;
+    transform: translateX(-50%);
+}
+.grid-cell.is-path::after { /* Horizontal connector */
+    height: var(--flow-path-width);
+    width: 50%; /* Half the cell width */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Show/hide connectors based on direction */
+.grid-cell.path-from-top::before { top: 0; }
+.grid-cell.path-from-bottom::before { bottom: 0; }
+.grid-cell.path-from-left::after { left: 0; }
+.grid-cell.path-from-right::after { right: 0; }
+
+.grid-cell.path-to-top::before { top: 0; }
+.grid-cell.path-to-bottom::before { bottom: 0; }
+.grid-cell.path-to-left::after { left: 0; }
+.grid-cell.path-to-right::after { right: 0; }
+
+/* Hide opposite connector if it exists */
+.grid-cell.path-from-top.path-to-bottom::before,
+.grid-cell.path-from-bottom.path-to-top::before,
+.grid-cell.path-from-left.path-to-right::after,
+.grid-cell.path-from-right.path-to-left::after {
+    height: 100%; /* Fill cell if straight through */
+    width: 100%;
+}
+
+/* Dot Styling */
+.dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--flow-dot-size);
+    height: var(--flow-dot-size);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Above path */
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1);
+    /* Background color set inline */
+    border: 2px solid rgba(255, 255, 255, 0.5); /* Subtle white border */
+}
+
+/* Pulse animation for unconnected dots */
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+}
+
+.dot-pulse {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    background-color: inherit; /* Match dot color */
+    animation: pulse 1.5s infinite ease-in-out;
+    z-index: -1; /* Behind main dot */
+}
+
+/* Win Overlay */
+.colorflow-win-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+    backdrop-filter: blur(4px); /* Frosted glass effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px; /* Match container */
+    z-index: 20;
+}
+
+.colorflow-win-message {
+    text-align: center;
+    background-color: var(--flow-grid-bg);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    color: var(--flow-text);
+}
+.colorflow-win-message svg { /* Check icon */
+    color: #4CAF50; /* Green check */
+    width: 48px; height: 48px;
+    margin-bottom: 10px;
+}
+.colorflow-win-message h3 {
+    color: var(--flow-title-color);
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.colorflow-win-message p {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    line-height: 1.5;
+    color: #555;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .colorflow-container { padding: 15px; margin: 15px; }
+    .colorflow-title { font-size: 1.1em; }
+    .colorflow-header { margin-bottom: 15px; padding-bottom: 10px; gap: 8px; }
+    .colorflow-button { padding: 6px 10px; font-size: 0.85em; }
+    .colorflow-button.level-nav { padding: 5px 6px; font-size: 1em; }
+    .colorflow-grid-area { padding: 5px; }
+    .colorflow-grid { width: 100%; border-radius: 8px; }
+    .colorflow-win-message { padding: 25px; }
+    .colorflow-win-message h3 { font-size: 1.5em; }
+    .colorflow-win-message p { font-size: 1em; }
+}
+
+@media (max-width: 400px) {
+     .colorflow-title span { display: none; } /* Hide level details */
+     .colorflow-button svg { width: 16px; height: 16px; }
+     .colorflow-button.subtle span { display: none; } /* Hide Reset text */
+}

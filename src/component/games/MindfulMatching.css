@@ -1,0 +1,252 @@
+/* --- MindfulMatching.css --- */
+:root {
+    --match-bg: #f0f4f8; /* Light, calm background */
+    --match-container-bg: #ffffff;
+    --match-border: #d3e0ea; /* Soft blue/grey border */
+    --match-text: #334e68; /* Dark blue/grey text */
+    --match-accent: #6290c3; /* Calming blue */
+    --match-accent-light: #a0c4e4;
+    --match-card-back: #e0e8f0; /* Slightly darker card back */
+    --match-card-border: #b0c4d8;
+    --match-matched-glow: rgba(160, 196, 228, 0.3);
+    --match-win-bg: rgba(255, 255, 255, 0.95);
+}
+
+.matching-game-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px; /* Adjust as needed */
+    margin: 20px auto;
+    padding: 25px;
+    background-color: var(--match-container-bg);
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+    color: var(--match-text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative; /* For overlay positioning */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Header */
+.matching-game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--match-border);
+}
+
+.matching-back-button, .matching-restart-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: transparent;
+    color: var(--match-accent);
+    border: 1px solid var(--match-border);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+}
+.matching-back-button svg, .matching-restart-button svg {
+    margin-right: 6px;
+}
+
+.matching-back-button:hover, .matching-restart-button:hover {
+    background-color: var(--match-bg);
+    color: var(--match-text);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.matching-restart-button.large {
+    font-size: 1em;
+    padding: 12px 25px;
+    background-color: var(--match-accent);
+    color: white;
+    border-color: var(--match-accent);
+}
+.matching-restart-button.large:hover {
+     background-color: var(--match-text);
+     border-color: var(--match-text);
+     color: white;
+}
+
+.matching-game-title {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 400;
+    color: var(--match-accent);
+    text-align: center;
+    flex-grow: 1;
+    padding: 0 15px;
+}
+
+/* Game Info Bar */
+.matching-game-info {
+    text-align: right;
+    margin-bottom: 20px;
+    font-size: 1em;
+    color: var(--match-text);
+}
+
+/* Game Board */
+.matching-game-board {
+    display: grid;
+    /* Responsive grid: Adjust minmax card size (e.g., 100px) and gap */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px;
+    padding: 10px;
+    perspective: 1000px; /* For 3D flip effect */
+}
+
+/* Individual Card */
+.card {
+    background-color: transparent; /* Needed for perspective */
+    aspect-ratio: 1 / 1; /* Make cards square */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none; /* Remove default button border if it were a button */
+    padding: 0; /* Remove default button padding */
+}
+
+.card:hover:not(.is-matched):not(.is-flipped) {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card.is-matched {
+    cursor: default;
+    opacity: 0.6; /* Fade out matched cards */
+    /* box-shadow: 0 0 10px var(--match-matched-glow); */
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d; /* Important for 3D flip */
+    border-radius: 8px; /* Match parent */
+}
+
+.card-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px; /* Match parent */
+    overflow: hidden;
+}
+
+.card-face-back {
+    background-color: var(--match-card-back);
+    border: 1px solid var(--match-card-border);
+    color: var(--match-accent-light); /* Color for the back pattern/icon */
+}
+
+.card-face-front {
+    background-color: #fff; /* White background for the icon */
+    border: 1px solid var(--match-card-border);
+    color: var(--match-accent); /* Color for the front icon */
+    transform: rotateY(180deg); /* Flip the front face initially */
+}
+
+/* Card icon styling */
+.card-face-front svg {
+    width: 60%; /* Adjust icon size within card */
+    height: 60%;
+}
+
+/* Win Overlay */
+.matching-win-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--match-win-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px; /* Match container */
+    z-index: 10;
+}
+
+.matching-win-message {
+    text-align: center;
+    background-color: var(--match-container-bg);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    color: var(--match-text);
+}
+.matching-win-message h3 {
+    color: var(--match-accent);
+    font-size: 2em;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+.matching-win-message p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+.matching-win-message button {
+    margin-top: 20px;
+}
+
+/* Instructions Footer */
+.matching-game-instructions {
+    text-align: center;
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--match-border);
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .matching-game-board {
+        gap: 10px;
+        grid-template-columns: repeat(4, 1fr); /* Example: Force 4 columns */
+    }
+    .matching-game-container { padding: 15px; }
+    .matching-game-title { font-size: 1.3em; }
+    .card-face-front svg { width: 55%; height: 55%; }
+}
+
+@media (max-width: 480px) {
+    .matching-game-board {
+        gap: 8px;
+        grid-template-columns: repeat(4, 1fr); /* Keep 4 columns, size adjusts */
+    }
+    .matching-game-title { font-size: 1.2em; }
+    .matching-back-button span, .matching-restart-button span { display: none; } /* Hide text */
+    .matching-back-button, .matching-restart-button { padding: 8px 10px; }
+    .matching-win-message { padding: 25px; }
+    .matching-win-message h3 { font-size: 1.6em; }
+    .matching-win-message p { font-size: 1em; }
+
+}
