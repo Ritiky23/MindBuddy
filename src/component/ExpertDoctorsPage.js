@@ -238,24 +238,24 @@ const styles = {
 const dummyDoctors = [
     {
         id: 'doc1',
-        name: 'Dr. Eleanor Vance',
+        name: 'Dr. Alka Pandey',
         credentials: 'MD, Psychiatrist',
         specialty: 'Adult Psychiatry, Mood Disorders',
         photoUrl: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZG9jdG9yfGVufDB8fDB8fHww&auto=format&fit=crop&w=100&q=60', // Replace with actual photo
         bio: 'Dr. Vance is dedicated to providing compassionate and comprehensive mental health care. She specializes in treating depression, anxiety, and bipolar disorder.',
-        phone: '555-0101',
-        email: 'eleanor.vance@mindbuddy.expert',
+        phone: '+918318574121',
+        email: 'alka.pandey@mindbuddy.expert',
         experience: '12 years',
     },
     {
         id: 'doc2',
-        name: 'Dr. Samuel Green',
+        name: 'Dr. Bhaskar Singh',
         credentials: 'PsyD, Clinical Psychologist',
         specialty: 'Cognitive Behavioral Therapy (CBT)',
         photoUrl: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZG9jdG9yfGVufDB8fDB8fHww&auto=format&fit=crop&w=100&q=60',
         bio: 'Dr. Green focuses on evidence-based therapies to help individuals overcome challenges and improve their well-being, with expertise in CBT for anxiety and trauma.',
-        phone: '555-0102',
-        email: 'samuel.green@mindbuddy.expert',
+        phone: '+918756768297',
+        email: 'bhaskar.singh@mindbuddy.expert',
         experience: '8 years',
     },
     {
@@ -263,13 +263,12 @@ const dummyDoctors = [
         name: 'Dr. Aisha Khan',
         credentials: 'LCSW, Therapist',
         specialty: 'Family Therapy, Child Psychology',
-        photoUrl: 'https://images.unsplash.com/photo-1622253692010-333f2da60310?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGRvY3RvcnxlbnwwfHwwfHx8MA&auto=format&fit=crop&w=100&q=60',
+        photoUrl: 'https://images.openai.com/thumbnails/89f68c2b20a290fe73ab8a46044bc6e3.jpeg',
         bio: 'Aisha Khan works with families and children to navigate complex emotional landscapes, fostering communication and resilience within family units.',
-        phone: '555-0103',
+        phone: '+919792208328',
         email: 'aisha.khan@mindbuddy.expert',
         experience: '10 years',
     },
-    // Add more doctors
 ];
 
 

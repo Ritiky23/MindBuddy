@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './Questionnaire.css'; // We'll create/update this
 import BgImage from "../assets/bg.jpg"; // Make sure this path is correct
 
+// Define questions with options and weights
 const questions = [
   { question: 'How often do you feel anxious?', options: ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'], weight: [0, 1, 2, 3, 4] },
   { question: 'Do you find it hard to relax?', options: ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'], weight: [0, 1, 2, 3, 4] },
@@ -17,70 +18,106 @@ const questions = [
   { question: 'Do you often feel hopeless about the future?', options: ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'], weight: [0, 1, 2, 3, 4] },
 ];
 
+// Animation duration should match CSS transition
+const TRANSITION_DURATION = 300; // ms
+
 const Questionnaire = () => {
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(null);
   const [showResults, setShowResults] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
-  const [isFading, setIsFading] = useState(false); // For question transition
+  const [isFading, setIsFading] = useState(false); // Manages fade transitions
 
   const navigate = useNavigate();
 
+  // Handle starting the questionnaire from the welcome screen
   const handleStart = () => {
-    setIsStarted(true);
+    setIsFading(true); // Fade out welcome screen
+    setTimeout(() => {
+      setIsStarted(true);
+      setIsFading(false); // Fade in first question
+    }, TRANSITION_DURATION);
   };
 
+  // Handle selecting an answer option
   const handleAnswerChange = (selectedOptionIndex) => {
     const updatedAnswers = [...answers];
     updatedAnswers[currentQuestionIndex] = selectedOptionIndex;
     setAnswers(updatedAnswers);
 
-    // Auto-advance to next question or show submit
+    // Auto-advance or submit after answering
     if (currentQuestionIndex < questions.length - 1) {
-      setIsFading(true);
+      setIsFading(true); // Fade out current question
       setTimeout(() => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setIsFading(false);
-      }, 300); // Match CSS transition duration
+        setIsFading(false); // Fade in next question
+      }, TRANSITION_DURATION);
+    } else {
+       // Auto-submit on the last question answer
+       handleSubmit(updatedAnswers);
     }
   };
 
-  const handleSubmit = () => {
+  // Handle moving to the previous question
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setIsFading(true); // Fade out current question
+      setTimeout(() => {
+        setCurrentQuestionIndex(currentQuestionIndex - 1);
+        setIsFading(false); // Fade in previous question
+      }, TRANSITION_DURATION);
+    }
+  };
+
+  // Handle submitting the questionnaire and calculating score
+  const handleSubmit = (finalAnswers = answers) => {
     let totalScore = 0;
-    answers.forEach((answer, index) => {
+    finalAnswers.forEach((answer, index) => {
       if (answer !== null) {
         totalScore += questions[index].weight[answer];
       }
     });
     setScore(totalScore);
-    setShowResults(true);
-    setIsFading(true); // Fade out last question
-    setTimeout(() => setIsFading(false), 300); // Clear fade for results
+    setIsFading(true); // Fade out last question/submit state
+    setTimeout(() => {
+      setShowResults(true);
+      setIsFading(false); // Fade in results
+    }, TRANSITION_DURATION);
   };
 
+  // Handle retaking the questionnaire
   const handleRetake = () => {
-    setAnswers(Array(questions.length).fill(null));
-    setCurrentQuestionIndex(0);
-    setScore(null);
-    setShowResults(false);
-    setIsStarted(true); // Go back to the first question
+    setIsFading(true); // Fade out results
+    setTimeout(() => {
+      setAnswers(Array(questions.length).fill(null));
+      setCurrentQuestionIndex(0);
+      setScore(null);
+      setShowResults(false);
+      setIsStarted(true); // Stay on questionnaire flow (starts with index 0)
+      setIsFading(false); // Fade in first question
+    }, TRANSITION_DURATION);
   };
 
+  // Handle navigating back to the home page
   const handleBackToHome = () => {
-    navigate('/');
+     setIsFading(true); // Fade out current view (results)
+     setTimeout(() => {
+        navigate('/');
+     }, TRANSITION_DURATION);
   };
 
-  const progress = ((currentQuestionIndex + (answers[currentQuestionIndex] !== null ? 1 : 0)) / questions.length) * 100;
-  // A more accurate progress considering if current question is answered for the "last step" visual
+  // Calculate visual progress for the progress bar
   const visualProgress = showResults ? 100 : (currentQuestionIndex / questions.length) * 100;
 
+  // --- Conditional Rendering ---
 
+  // Welcome Screen
   if (!isStarted) {
     return (
       <div className="questionnaire-wrapper" style={{ backgroundImage: `url(${BgImage})` }}>
         <div className="questionnaire-overlay">
-          <div className="welcome-screen">
+          <div className={`welcome-screen card ${isFading ? 'fade-out' : 'fade-in'}`}> {/* Added 'card' and fade classes */}
             <h1>Mind Wellness Check-in</h1>
             <p>Take a few moments to reflect on your feelings. This short questionnaire can help you understand your current emotional state.</p>
             <button onClick={handleStart} className="action-button start-button">
@@ -92,9 +129,12 @@ const Questionnaire = () => {
     );
   }
 
+  // Results Screen
   if (showResults) {
     let resultMessage = '';
     let advice = '';
+    // Determine result message and advice based on score ranges
+    // (Using score directly for simplicity, adjust ranges as needed)
     if (score <= 10) {
       resultMessage = 'You seem to be doing well.';
       advice = 'Continue practicing self-care and maintaining your healthy habits. If anything changes, don\'t hesitate to check in again.';
@@ -104,7 +144,7 @@ const Questionnaire = () => {
     } else if (score <= 30) {
       resultMessage = 'You might be experiencing moderate anxiety or depression.';
       advice = 'It’s important to address these feelings. Reaching out to a mental health professional for support and guidance is highly recommended. You don\'t have to go through this alone.';
-    } else {
+    } else { // score > 30
       resultMessage = 'You might be experiencing significant anxiety or depression.';
       advice = 'Please seek professional help as soon as possible. A therapist or counselor can provide you with the support and strategies needed to improve your well-being. Your mental health is important.';
     }
@@ -133,6 +173,7 @@ const Questionnaire = () => {
     );
   }
 
+  // Questionnaire Questions Screen
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
@@ -140,6 +181,7 @@ const Questionnaire = () => {
       <div className="questionnaire-overlay">
         <div className={`questionnaire-card card ${isFading ? 'fade-out' : 'fade-in'}`}>
           <div className="progress-bar-container">
+            {/* Use visualProgress for smooth transition */}
             <div className="progress-bar" style={{ width: `${visualProgress}%` }}></div>
           </div>
           <div className="question-header">
@@ -158,26 +200,23 @@ const Questionnaire = () => {
             ))}
           </div>
           <div className="navigation-buttons">
-            {currentQuestionIndex > 0 && !showResults && (
+            {/* Show Previous button if not on the first question */}
+            {currentQuestionIndex > 0 && (
               <button
                 className="action-button secondary prev-button"
-                onClick={() => {
-                  setIsFading(true);
-                  setTimeout(() => {
-                    setCurrentQuestionIndex(currentQuestionIndex - 1);
-                    setIsFading(false);
-                  }, 300);
-                }}
+                onClick={handlePrevious}
               >
                 Previous
               </button>
             )}
-            {/* Submit button appears only on the last question if not auto-submitting */}
-            {answers[currentQuestionIndex] !== null && currentQuestionIndex === questions.length - 1 && !showResults && (
+            {/* Removed explicit Submit button as it auto-submits on last answer */}
+            {/* If you prefer a manual submit button:
+            {answers[currentQuestionIndex] !== null && currentQuestionIndex === questions.length - 1 && (
               <button className="action-button submit-button" onClick={handleSubmit}>
                 View Results
               </button>
             )}
+            */}
           </div>
         </div>
       </div>

@@ -1,4 +1,33 @@
-/* General Body Styles (if not already in a global CSS) */
+/* Questionnaire.css */
+
+/* Use a calming color palette */
+:root {
+  --color-primary: #5C6BC0; /* Indigo */
+  --color-primary-dark: #3F51B5; /* Darker Indigo */
+  --color-primary-light: #7986CB; /* Lighter Indigo */
+  --color-accent: #4CAF50; /* Green - for positive feedback */
+  --color-warn: #FF9800; /* Orange - for moderate */
+  --color-danger: #F44336; /* Red - for significant */
+  --color-text-dark: #37474F; /* Dark Blue Grey */
+  --color-text-medium: #546E7A; /* Blue Grey */
+  --color-text-light: #90A4AE; /* Light Blue Grey */
+  --color-background-card: rgba(255, 255, 255, 0.98); /* Almost opaque white for cards */
+  --color-background-overlay: rgba(0, 0, 0, 0.6); /* Darker overlay */
+  --color-background-welcome: rgba(48, 63, 159, 0.8); /* Darker primary with transparency */
+  --color-border-light: #CFD8DC; /* Light Grey Blue */
+  --color-border-medium: #B0BEC5; /* Medium Grey Blue */
+  --color-shadow-light: rgba(0, 0, 0, 0.1);
+  --color-shadow-medium: rgba(0, 0, 0, 0.15);
+  --color-shadow-strong: rgba(0, 0, 0, 0.2);
+  --border-radius-card: 16px;
+  --border-radius-button: 8px;
+  --transition-speed-fast: 0.2s;
+  --transition-speed-normal: 0.3s; /* Matches JS duration */
+  --transition-speed-slow: 0.4s;
+}
+
+
+/* General Body Styles */
 body, html {
   margin: 0;
   padding: 0;
@@ -6,8 +35,13 @@ body, html {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   height: 100%;
   width: 100%;
-  background-color: #f4f7f6; /* Fallback if image doesn't load */
-  color: #333;
+  background-color: #f4f7f6; /* Fallback */
+  color: var(--color-text-dark);
+  line-height: 1.6;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 .questionnaire-wrapper {
@@ -20,8 +54,7 @@ body, html {
   background-size: cover;
   background-position: center;
   padding: 20px;
-  box-sizing: border-box;
-  position: relative; /* For overlay */
+  position: relative;
 }
 
 .questionnaire-overlay {
@@ -30,27 +63,27 @@ body, html {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+  background-color: var(--color-background-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px; /* Ensure content within overlay is also padded */
-  box-sizing: border-box;
+  padding: 20px;
 }
 
 /* Card base style */
 .card {
-  background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 6px 10px rgba(0,0,0,0.1);
-  padding: 30px 40px;
+  background-color: var(--color-background-card);
+  border-radius: var(--border-radius-card);
+  box-shadow: 0 10px 30px var(--color-shadow-medium), 0 6px 15px var(--color-shadow-light);
+  padding: 40px; /* Increased padding */
   width: 100%;
-  max-width: 650px;
+  max-width: 700px; /* Slightly wider max-width */
   text-align: center;
-  box-sizing: border-box;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: opacity var(--transition-speed-normal) ease-in-out, transform var(--transition-speed-normal) ease-in-out;
+  will-change: opacity, transform; /* Optimize animation */
 }
 
+/* Fade transitions */
 .fade-in {
   opacity: 1;
   transform: translateY(0);
@@ -58,97 +91,97 @@ body, html {
 
 .fade-out {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(10px); /* Fade down slightly */
 }
 
 
 /* Welcome Screen */
 .welcome-screen {
-  color: #fff; /* Text color for welcome screen as it's directly on overlay */
+  color: white;
   text-align: center;
-  max-width: 600px;
-  background-color: rgba(40, 40, 70, 0.7); /* Optional distinct background for welcome */
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  max-width: 650px; /* Match card max-width more closely */
+  background-color: var(--color-background-welcome);
+  padding: 50px; /* Increased padding */
+  border-radius: var(--border-radius-card);
+  box-shadow: 0 12px 24px var(--color-shadow-strong);
 }
 
 .welcome-screen h1 {
-  font-size: 2.8rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  color: #e0e7ff; /* Lighter color for heading */
+  font-size: 3rem; /* Larger heading */
+  margin-bottom: 1.5rem; /* Increased spacing */
+  font-weight: 700; /* Bolder */
+  color: #fff; /* Pure white for heading */
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2); /* Subtle text shadow */
 }
 
 .welcome-screen p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  color: #cdd6f0; /* Softer text color */
+  font-size: 1.2rem; /* Larger paragraph */
+  line-height: 1.7; /* Improved line height */
+  margin-bottom: 2.5rem; /* Increased spacing */
+  color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
 }
-
-.start-button {
-  padding: 15px 30px !important;
-  font-size: 1.2rem !important;
-}
-
 
 /* Questionnaire Card specific styles */
-.questionnaire-card h2, .results-container h2 {
-  color: #5C6BC0; /* Calming Indigo/Blue */
-  font-size: 1.3rem;
-  font-weight: 600;
+.questionnaire-card h2,
+.results-container h2 {
+  color: var(--color-primary-dark);
+  font-size: 1.6rem; /* Larger main heading */
+  font-weight: 700;
   margin-top: 0;
-  margin-bottom: 8px;
+  margin-bottom: 20px; /* Increased spacing */
 }
 .question-header h2 {
-  color: #787A91; /* Subtler color for "Question X of Y" */
-  font-size: 0.9rem;
+  color: var(--color-text-medium); /* Subtler color */
+  font-size: 1rem; /* Slightly larger secondary heading */
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px; /* More spacing */
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .question-text {
-  font-size: 1.5rem;
-  color: #3F51B5; /* Darker Indigo for emphasis */
-  margin-bottom: 30px;
-  line-height: 1.4;
-  font-weight: 500;
+  font-size: 1.8rem; /* Larger question text */
+  color: var(--color-primary-dark);
+  margin-bottom: 40px; /* Increased spacing */
+  line-height: 1.5;
+  font-weight: 600;
 }
 
 /* Options Grid */
 .options-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-  margin-bottom: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Wider min-width */
+  gap: 20px; /* Increased gap */
+  margin-bottom: 40px; /* Increased spacing */
 }
 
 .option-button {
-  background-color: #f0f2f5; /* Light grey for unselected options */
-  color: #5C6BC0;
-  border: 2px solid #d9dde8;
-  padding: 15px 10px; /* Generous padding */
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
+  background-color: #f0f4f8; /* Very light blue-grey */
+  color: var(--color-primary);
+  border: 2px solid var(--color-border-light);
+  padding: 18px 15px; /* More padding */
+  border-radius: var(--border-radius-button);
+  font-size: 1.1rem; /* Larger font */
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-speed-fast) ease;
   text-align: center;
+  box-shadow: 0 2px 5px var(--color-shadow-light);
 }
 
 .option-button:hover {
-  background-color: #e0e7ff; /* Lighter blue on hover */
-  border-color: #a8b5e0;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  background-color: var(--color-primary-light);
+  color: white;
+  border-color: var(--color-primary-light);
+  transform: translateY(-3px); /* More pronounced lift */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
 
 .option-button.selected {
-  background-color: #5C6BC0; /* Indigo */
+  background-color: var(--color-primary);
   color: white;
-  border-color: #5C6BC0;
-  box-shadow: 0 2px 4px rgba(92, 107, 192, 0.4);
+  border-color: var(--color-primary);
+  box-shadow: 0 3px 8px rgba(92, 107, 192, 0.5); /* Stronger shadow */
   transform: translateY(0); /* Reset transform if it was hovered then selected */
 }
 
@@ -157,102 +190,122 @@ body, html {
   width: 100%;
   background-color: #e0e0e0;
   border-radius: 5px;
-  height: 10px;
-  margin-bottom: 25px;
+  height: 12px; /* Slightly thicker */
+  margin-bottom: 30px; /* Increased spacing */
   overflow: hidden;
 }
 
 .progress-bar {
   height: 100%;
-  background-color: #7986CB; /* Lighter Indigo */
+  background-color: var(--color-primary-light);
   border-radius: 5px;
-  transition: width 0.4s ease-in-out;
+  transition: width var(--transition-speed-slow) ease-in-out; /* Slower transition for smoothness */
 }
 
 /* Navigation & Action Buttons */
 .navigation-buttons {
   display: flex;
-  justify-content: space-between; /* Pushes prev and next/submit apart */
+  justify-content: space-between; /* Pushes prev and submit/empty space */
   align-items: center;
-  margin-top: 20px;
-  min-height: 50px; /* Ensure space even if one button is missing */
+  margin-top: 30px; /* Increased spacing */
+  min-height: 50px;
 }
-.navigation-buttons .prev-button {
-    margin-right: auto; /* Pushes prev to the left */
-}
-.navigation-buttons .submit-button {
-    margin-left: auto; /* Pushes submit to the right */
-}
-
 
 .action-button {
-  background-color: #5C6BC0; /* Primary action color - Indigo */
+  background-color: var(--color-primary);
   color: white;
   border: none;
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
+  padding: 15px 30px; /* More padding */
+  border-radius: var(--border-radius-button);
+  font-size: 1.1rem; /* Larger font */
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: background-color var(--transition-speed-fast) ease, transform var(--transition-speed-fast) ease, box-shadow var(--transition-speed-fast) ease;
+  box-shadow: 0 3px 8px var(--color-shadow-light);
+  text-decoration: none; /* Ensure no underline if used with Link */
+  display: inline-block; /* Ensure padding works */
 }
 
 .action-button:hover {
-  background-color: #3F51B5; /* Darker Indigo on hover */
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--color-shadow-medium);
 }
 
 .action-button.secondary {
-  background-color: #CFD8DC; /* Light Grey Blue for secondary actions */
-  color: #37474F; /* Dark Grey Blue text */
+  background-color: var(--color-border-light);
+  color: var(--color-text-dark);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
 .action-button.secondary:hover {
-  background-color: #B0BEC5; /* Slightly darker Grey Blue */
+  background-color: var(--color-border-medium);
+  color: var(--color-text-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.start-button {
+  /* Specific styles for the large start button */
+  padding: 18px 35px;
+  font-size: 1.3rem;
 }
 
 
 /* Results Screen */
+.results-container h2 {
+    margin-bottom: 10px; /* Less space below main heading here */
+}
 .results-container .score-display {
   font-size: 1.8rem;
-  color: #333;
-  margin: 20px 0;
-  font-weight: 500;
+  color: var(--color-text-dark);
+  margin: 25px 0; /* More space */
+  font-weight: 600;
+  display: flex; /* Center score number */
+  justify-content: center;
+  align-items: center;
 }
 
 .results-container .score-display span {
-  font-weight: 700;
-  color: #3F51B5; /* Indigo for the score number */
-  font-size: 2.5rem;
-  padding: 5px 15px;
-  background-color: #e0e7ff;
-  border-radius: 8px;
-  margin-left: 10px;
+  font-weight: 800; /* Extra bold */
+  color: var(--color-primary-dark);
+  font-size: 3rem; /* Much larger score number */
+  padding: 8px 20px;
+  background-color: #e8eaf6; /* Very light primary background */
+  border-radius: var(--border-radius-button);
+  margin-left: 15px;
+  min-width: 80px; /* Give it a minimum width */
+  text-align: center;
 }
 
 .results-container .result-interpretation {
-  font-size: 1.2rem;
-  color: #455A64; /* Dark blue-grey */
-  margin-bottom: 10px;
-  font-weight: 500;
+  font-size: 1.3rem; /* Larger interpretation text */
+  color: var(--color-text-medium);
+  margin-bottom: 15px;
+  font-weight: 600;
 }
 
 .results-container .result-advice {
-  font-size: 1rem;
-  color: #546E7A; /* Slightly lighter blue-grey */
-  line-height: 1.6;
+  font-size: 1.1rem; /* Larger advice text */
+  color: var(--color-text-medium);
+  line-height: 1.7;
   margin-bottom: 30px;
-  background-color: #f9f9fa;
-  padding: 15px;
-  border-radius: 6px;
-  border-left: 4px solid #7986CB;
+  background-color: #fcfdff; /* Very light background */
+  padding: 20px; /* More padding */
+  border-radius: var(--border-radius-button);
+  border-left: 5px solid var(--color-primary-light); /* Thicker border */
+  text-align: left; /* Align advice text left */
 }
+
+/* Color coding advice based on score ranges */
+.results-container .result-advice.advice-low { border-left-color: var(--color-accent); }
+.results-container .result-advice.advice-medium { border-left-color: var(--color-warn); }
+.results-container .result-advice.advice-high { border-left-color: var(--color-danger); }
+
 
 .result-actions {
   display: flex;
-  gap: 15px;
+  gap: 20px; /* Increased gap */
   justify-content: center;
   margin-top: 20px;
 }
@@ -260,35 +313,92 @@ body, html {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .card {
-    padding: 20px;
-    margin: 0 10px; /* Add some horizontal margin on small screens */
+    padding: 25px; /* Adjusted padding */
+    margin: 0 15px;
+  }
+  .welcome-screen {
+     padding: 35px;
   }
   .welcome-screen h1 {
-    font-size: 2rem;
+    font-size: 2.4rem;
   }
   .welcome-screen p {
-    font-size: 1rem;
+    font-size: 1.1rem;
+  }
+  .questionnaire-card h2,
+  .results-container h2 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
   }
   .question-text {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
   }
   .options-grid {
     grid-template-columns: 1fr; /* Stack options vertically */
+    gap: 15px; /* Adjusted gap */
+    margin-bottom: 30px;
   }
   .option-button {
-    padding: 12px 10px;
+    padding: 15px 10px;
+    font-size: 1rem;
   }
   .action-button {
-    padding: 10px 20px;
-    font-size: 0.9rem;
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+  .start-button {
+    padding: 15px 30px;
+    font-size: 1.1rem;
   }
   .results-container .score-display {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
   .results-container .score-display span {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    padding: 6px 15px;
+    margin-left: 10px;
+    min-width: 70px;
+  }
+  .results-container .result-interpretation {
+      font-size: 1.1rem;
+  }
+  .results-container .result-advice {
+    font-size: 1rem;
+    padding: 15px;
   }
   .result-actions {
     flex-direction: column; /* Stack result buttons */
+    gap: 15px; /* Adjusted gap */
   }
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 20px;
+    }
+     .welcome-screen {
+        padding: 30px;
+    }
+    .welcome-screen h1 {
+        font-size: 2rem;
+    }
+    .question-text {
+        font-size: 1.3rem;
+    }
+    .options-grid {
+        gap: 10px;
+    }
+    .action-button {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+    }
+     .start-button {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    .results-container .score-display span {
+        font-size: 2rem;
+        min-width: 60px;
+    }
 }

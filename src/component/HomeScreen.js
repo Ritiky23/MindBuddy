@@ -97,12 +97,12 @@ const HomeScreen = () => {
   const testimonialsData = [
     {
       quote: "Mind Buddy has been a game-changer for managing my anxiety. The AI chat is surprisingly comforting.",
-      author: "Alex R.",
+      author: "Sumit K.",
       aosDelay: "100",
     },
     {
       quote: "The assessments helped me understand patterns I wasn't aware of. Highly recommend!",
-      author: "Jamie L.",
+      author: "Riya R.",
       aosDelay: "200",
     },
     {
